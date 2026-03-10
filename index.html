@@ -234,14 +234,14 @@
     let mdmApps = rawMDMApps.split(', ').sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     let selectedMDMApps = [];
 
-    // Master Tasks Aggiornato con Proprietà 'os' (global, apple, win, lin, and)
+    // Master Tasks Aggiornato con distinzione Ore ("h") e Giorni ("g")
     const masterTasks = [
         // GLOBAL TASKS
         { id: "task-iam", req: "all", os: "global", title: "Kick-off & Zero-Touch Strategy Alignment", time: "1h", defaultOwner: "IT Manager", defaultSupport: "Factorial Onboarding" },
         { id: "task-idp", req: "idp", os: "global", title: "Integrazione IdP: SSO & Provisioning", time: "2h", defaultOwner: "Identity Admin", defaultSupport: "Factorial IAM Spec" },
-        { id: "task-saml", req: "saml", os: "global", title: "Configurazione Custom SAML 2.0", time: "3h", defaultOwner: "Identity Admin", defaultSupport: "Factorial Solutions Eng" },
+        { id: "task-saml", req: "saml", os: "global", title: "Configurazione Custom SAML 2.0", time: "2g", defaultOwner: "Identity Admin", defaultSupport: "Factorial Solutions Eng" },
         { id: "task-hris-sync", req: "hris", os: "global", title: "Integrazione HRIS: Sincronizzazione Utenti", time: "1h", defaultOwner: "HR Admin", defaultSupport: "Factorial Integration" },
-        { id: "task-hw-cat", req: "hw", os: "global", title: "Test Acquisto Device via Catalogo", time: "30m", defaultOwner: "IT Manager", defaultSupport: "Factorial Logistics" },
+        { id: "task-hw-cat", req: "hw", os: "global", title: "Test Acquisto Device via Catalogo & Logistica", time: "3-5g", defaultOwner: "IT Manager", defaultSupport: "Factorial Logistics" },
         { id: "task-saas", req: "saas", os: "global", title: "SaaS API Provisioning Setup", time: "1.5h", defaultOwner: "IT Admin", defaultSupport: "Factorial App Integration" },
         { id: "task-mdm-apps", req: "mdm-apps", os: "global", title: "Push MDM Inbuilt Software Packages", time: "1.5h", defaultOwner: "IT Admin", defaultSupport: "Factorial MDM Spec" },
         { id: "task-mdm-custom", req: "mdm-custom", os: "global", title: "Test & Deploy Custom Package (.pkg/.msi)", time: "2h", defaultOwner: "SysAdmin", defaultSupport: "Factorial Solutions Eng" },
@@ -284,7 +284,7 @@
     function filterMDMList() { renderMDMList(document.getElementById('mdm-search').value); }
     function handleMDMChange(cb) { if (cb.checked && !selectedMDMApps.includes(cb.value)) selectedMDMApps.push(cb.value); else if (!cb.checked) selectedMDMApps = selectedMDMApps.filter(a => a !== cb.value); updateInventory(); }
 
-    // RENDERIZZAZIONE DIVISA IN DUE AREE
+    // RENDERIZZAZIONE
     function updateInventory() {
         const apple = parseInt(document.getElementById('os-apple').value) || 0;
         const win = parseInt(document.getElementById('os-win').value) || 0;
@@ -345,11 +345,20 @@
             else if (t.req === 'saas') taskTitle = `SaaS Provisioning (${selectedSaaS.length} Apps: ${selectedSaaS.slice(0, 2).join(',')})`;
             else if (t.req === 'mdm-apps') taskTitle = `MDM Software Push (${selectedMDMApps.length} Pkgs)`;
 
+            // Logica Giorni vs Ore
+            const isMultiDay = t.time.toLowerCase().includes('g') || t.time.toLowerCase().includes('d');
+            div.dataset.multiDay = isMultiDay;
             div.dataset.title = taskTitle;
+            
+            const dateFields = isMultiDay 
+                ? `<div class="input-group"><label>Inizio</label><input type="date" id="${t.id}-start" class="sort-date" value="${data.start || ''}" onchange="sortGlobalTasks()"></div>
+                   <div class="input-group"><label>Fine</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>`
+                : `<div class="input-group" style="grid-column: span 2;"><label>Data Esecuzione</label><input type="date" id="${t.id}-start" class="sort-date" value="${data.start || ''}" onchange="sortGlobalTasks()"></div>
+                   <input type="hidden" id="${t.id}-end" value="">`;
+
             div.innerHTML = `<div class="task-header"><span>${taskTitle}</span><span class="task-time">${t.time}</span></div>
                 <div class="task-grid">
-                    <div class="input-group"><label>Inizio</label><input type="date" id="${t.id}-start" class="sort-date" value="${data.start || ''}" onchange="sortGlobalTasks()"></div>
-                    <div class="input-group"><label>Fine</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>
+                    ${dateFields}
                     <div class="input-group"><label>Owner</label><input type="text" id="${t.id}-owner" value="${data.owner || t.defaultOwner}"></div>
                     <div class="input-group"><label>Factorial</label><input type="text" id="${t.id}-support" value="${data.support || t.defaultSupport}"></div>
                 </div>`;
@@ -369,11 +378,20 @@
             tasks.forEach(t => {
                 const data = existingData[t.id] || {};
                 const tDiv = document.createElement('div'); tDiv.className = 'os-task-item'; tDiv.dataset.id = t.id; tDiv.dataset.title = t.title; tDiv.dataset.type = 'os';
+                
+                const isMultiDay = t.time.toLowerCase().includes('g') || t.time.toLowerCase().includes('d');
+                tDiv.dataset.multiDay = isMultiDay;
+
+                const dateFields = isMultiDay 
+                    ? `<div class="input-group"><label>Start</label><input type="date" id="${t.id}-start" value="${data.start || ''}"></div>
+                       <div class="input-group"><label>End</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>`
+                    : `<div class="input-group" style="grid-column: span 2;"><label>Data</label><input type="date" id="${t.id}-start" value="${data.start || ''}"></div>
+                       <input type="hidden" id="${t.id}-end" value="">`;
+
                 tDiv.innerHTML = `
                     <div class="os-task-header">${t.title} <span style="float:right; color:var(--factorial-pink); font-size:11px;">${t.time}</span></div>
                     <div class="os-task-grid">
-                        <div class="input-group"><label>Start</label><input type="date" id="${t.id}-start" value="${data.start || ''}"></div>
-                        <div class="input-group"><label>End</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>
+                        ${dateFields}
                         <div class="input-group"><label>Owner</label><input type="text" id="${t.id}-owner" value="${data.owner || t.defaultOwner}"></div>
                         <div class="input-group"><label>Support</label><input type="text" id="${t.id}-support" value="${data.support || t.defaultSupport}"></div>
                     </div>`;
@@ -397,7 +415,7 @@
         }).forEach(task => container.appendChild(task));
     }
 
-    // SVG EXPORT AGGIORNATO PER LE DUE FASI
+    // SVG EXPORT AGGIORNATO (Gestione Data Singola vs Multi-giorno)
     function exportSVG() {
         const clientName = document.getElementById('client-name').value || 'Acme_Corp';
         const dark = "#1a1a1a", green = "#42B891", pink = "#f06a6a", grey = "#e0e0e0";
@@ -411,8 +429,13 @@
         if (globalTasks.length > 0) {
             globalTasks.forEach((el) => {
                 const id = el.dataset.id;
+                const isMulti = el.dataset.multiDay === 'true';
+                const startVal = document.getElementById(`${id}-start`).value || 'TBD';
+                const endVal = document.getElementById(`${id}-end`)?.value || 'TBD';
+                const dateText = isMulti ? `Start: ${startVal} | End: ${endVal}` : `Data: ${startVal}`;
+
                 svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">${index}. ${el.dataset.title}</text>
-                    <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Start: ${document.getElementById(`${id}-start`).value || 'TBD'} | End: ${document.getElementById(`${id}-end`).value || 'TBD'}</text>
+                    <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}</text>
                     <text x="800" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${document.getElementById(`${id}-owner`).value || 'TBD'}</text>
                     <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
                 currentY += 45; index++;
@@ -429,8 +452,13 @@
 
             osTasks.forEach((el) => {
                 const id = el.dataset.id;
+                const isMulti = el.dataset.multiDay === 'true';
+                const startVal = document.getElementById(`${id}-start`).value || 'TBD';
+                const endVal = document.getElementById(`${id}-end`)?.value || 'TBD';
+                const dateText = isMulti ? `Start: ${startVal} | End: ${endVal}` : `Data: ${startVal}`;
+
                 svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">${index}. [OS MDM] ${el.dataset.title}</text>
-                    <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Start: ${document.getElementById(`${id}-start`).value || 'TBD'} | End: ${document.getElementById(`${id}-end`).value || 'TBD'}</text>
+                    <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}</text>
                     <text x="800" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${document.getElementById(`${id}-owner`).value || 'TBD'}</text>
                     <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
                 currentY += 45; index++;
