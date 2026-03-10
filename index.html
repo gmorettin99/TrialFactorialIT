@@ -13,13 +13,15 @@
         .header { text-align: center; margin-bottom: 30px; padding: 0 20px; }
         .header h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; margin: 0; }
         .header h1 span.pink { color: var(--factorial-pink); }
-        .main-container { display: grid; grid-template-columns: 320px 1fr; gap: 30px; width: 95%; max-width: 1250px; margin-bottom: 60px; }
+        .main-container { display: grid; grid-template-columns: 320px 1fr; gap: 30px; width: 95%; max-width: 1300px; margin-bottom: 60px; }
+        
         .sidebar { display: flex; flex-direction: column; gap: 20px; }
         .formal-card { background: #FFFFFF; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); }
         .card-title { color: var(--factorial-pink); font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--border-muted); padding-bottom: 8px; }
         .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
         .input-group label { font-size: 12px; font-weight: 700; opacity: 0.7; text-transform: uppercase; }
-        .input-group input, .input-group select { padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 14px; }
+        .input-group input[type="text"], .input-group select, .input-group input[type="date"] { padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 14px; }
+        
         .tier-card { border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; background: #fafafa; }
         .tier-card:hover { border-color: var(--primary-green); }
         .tier-card.active { border-color: var(--primary-green); background: var(--module-bg); box-shadow: 0 4px 12px rgba(66, 184, 145, 0.15); }
@@ -28,7 +30,20 @@
         .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .os-input { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-muted);}
         .os-input label { font-size: 12px; font-weight: 700; margin:0; }
-        .os-input input { width: 50px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        .os-input input { width: 50px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-family: 'DM Sans';}
+
+        /* Scroll Lists */
+        .scroll-list-container { max-height: 180px; overflow-y: auto; border: 1px solid var(--border-muted); border-radius: 6px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; background: #fafafa; }
+        .list-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .list-item input { accent-color: var(--primary-green); cursor: pointer; width: 16px; height: 16px; margin: 0;}
+        .list-item label { cursor: pointer; user-select: none; flex-grow: 1; }
+        .search-bar { padding: 8px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 12px; margin-bottom: 8px; width: 100%; box-sizing: border-box;}
+        
+        .checkbox-row { display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 10px; padding: 10px; background: #fff8f8; border: 1px solid var(--factorial-pink); border-radius: 6px; }
+        .checkbox-row.green-style { background: var(--module-bg); border-color: var(--primary-green); }
+        .checkbox-row input { accent-color: var(--factorial-pink); width: 18px; height: 18px; pointer-events:none; }
+        .checkbox-row.green-style input { accent-color: var(--primary-green); }
+        .checkbox-row label { font-size: 13px; font-weight: 700; cursor: pointer; color: var(--text-dark); }
 
         .timeline-area { display: flex; flex-direction: column; gap: 30px; }
         .phase-section { background-color: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); }
@@ -55,7 +70,6 @@
             <div class="formal-card">
                 <div class="card-title">1. Setup Cliente & Ecosistema</div>
                 <div class="input-group"><label>Nome Azienda</label><input type="text" id="client-name" placeholder="Es. Acme Corp"></div>
-                
                 <div class="input-group">
                     <label>Identity Provider (IdP)</label>
                     <select id="idp-system" onchange="updateInventory()">
@@ -65,95 +79,75 @@
                         <option value="other">Altro / Nessuno</option>
                     </select>
                 </div>
-
                 <div class="input-group">
                     <label>HRIS (Sistema HR)</label>
                     <select id="hr-system" onchange="updateInventory()">
                         <option value="factorial">Factorial</option>
-                        <option value="afas_software">AFAS Software</option>
-                        <option value="alexishr">AlexisHR</option>
                         <option value="bamboohr">BambooHR</option>
-                        <option value="boondmanager">BoondManager</option>
-                        <option value="breathe_hr">Breathe HR</option>
-                        <option value="catalystone">CatalystOne</option>
-                        <option value="cezanne_hr">Cezanne HR</option>
-                        <option value="charlie">Charlie</option>
-                        <option value="deel">Deel</option>
-                        <option value="employment_hero">Employment Hero</option>
-                        <option value="eurecia">Eurécia</option>
-                        <option value="google_workspace">Google Workspace</option>
-                        <option value="hailey_hr">Hailey HR</option>
-                        <option value="heavenhr">HeavenHR</option>
-                        <option value="hibob">HiBob</option>
-                        <option value="hr_works">HR WORKS</option>
-                        <option value="humaans">Humaans</option>
-                        <option value="iris_cascade">IRIS Cascade</option>
-                        <option value="kenjo">Kenjo</option>
-                        <option value="leapsome">Leapsome</option>
-                        <option value="lucca">Lucca</option>
-                        <option value="mhr_people_first">MHR People First</option>
-                        <option value="microsoft_entra_id">Microsoft Entra ID</option>
-                        <option value="nibelis">Nibelis</option>
-                        <option value="nmbrs">Nmbrs</option>
-                        <option value="officient">Officient</option>
-                        <option value="okta">Okta</option>
-                        <option value="oysterhr">OysterHR</option>
-                        <option value="payfit">PayFit</option>
-                        <option value="paylocity">Paylocity</option>
-                        <option value="peoplehr">PeopleHR</option>
                         <option value="personio">Personio</option>
-                        <option value="planday">Planday</option>
-                        <option value="remote">Remote</option>
-                        <option value="rippling">Rippling</option>
-                        <option value="sage_hr">Sage HR</option>
-                        <option value="sap_successfactors">SAP SuccessFactors</option>
-                        <option value="sd_worx">SD Worx</option>
-                        <option value="sesame_hr">Sesame HR</option>
-                        <option value="silae">Silae</option>
-                        <option value="simployer">Simployer</option>
-                        <option value="tellent_hr">Tellent HR</option>
-                        <option value="trinet">TriNet (Zenefits)</option>
-                        <option value="ukg_pro">UKG Pro</option>
-                        <option value="ukg_ready">UKG Ready</option>
-                        <option value="visma_raet">Visma Raet - Youforce</option>
                         <option value="workday">Workday</option>
-                        <option value="workforce">workforce.com</option>
-                        <option value="zelt">Zelt</option>
                         <option value="other">Altro / Nessuno</option>
                     </select>
                 </div>
             </div>
 
             <div class="formal-card">
-                <div class="card-title">2. Tier Pricing</div>
-                <div class="tier-card active" onclick="selectTier(25)" id="tier-25">
-                    <div class="tier-name">Fino a 25 Dispositivi</div>
-                </div>
-                <div class="tier-card" onclick="selectTier(50)" id="tier-50">
-                    <div class="tier-name">Fino a 50 Dispositivi</div>
-                </div>
-                <div class="tier-card" onclick="selectTier(100)" id="tier-100">
-                    <div class="tier-name">Fino a 100 Dispositivi</div>
-                </div>
-            </div>
+                <div class="card-title">2. Tier Pricing & OS Inventory</div>
+                <div class="tier-card active" onclick="selectTier(25)" id="tier-25"><div class="tier-name">Fino a 25 Dispositivi</div></div>
+                <div class="tier-card" onclick="selectTier(50)" id="tier-50"><div class="tier-name">Fino a 50 Dispositivi</div></div>
+                <div class="tier-card" onclick="selectTier(100)" id="tier-100"><div class="tier-name">Fino a 100 Dispositivi</div></div>
 
-            <div class="formal-card">
-                <div class="card-title">3. Inventario OS</div>
-                <div class="os-grid">
+                <div class="os-grid" style="margin-top: 15px;">
                     <div class="os-input"><label>Apple</label><input type="number" id="os-apple" value="0" min="0" onchange="updateInventory()"></div>
                     <div class="os-input"><label>Windows</label><input type="number" id="os-win" value="0" min="0" onchange="updateInventory()"></div>
                     <div class="os-input"><label>Linux</label><input type="number" id="os-lin" value="0" min="0" onchange="updateInventory()"></div>
                     <div class="os-input"><label>Android</label><input type="number" id="os-and" value="0" min="0" onchange="updateInventory()"></div>
                 </div>
-                <div class="error-msg" id="inventory-err">Attenzione: La somma dei device supera il Tier selezionato!</div>
+                <div class="error-msg" id="inventory-err">Attenzione: La somma supera il Tier selezionato!</div>
+            </div>
+
+            <div class="formal-card">
+                <div class="card-title">3. Cloud SaaS & Hardware</div>
+                <div class="checkbox-row" onclick="toggleCheckbox('hw-catalogue')">
+                    <input type="checkbox" id="hw-catalogue">
+                    <label>Acquisto Device via Catalogo Factorial</label>
+                </div>
+                <div class="input-group" style="margin-bottom: 0;">
+                    <label>SaaS API Provisioning (Es. Slack, Github)</label>
+                    <div class="scroll-list-container" id="saas-list"></div>
+                    <input type="text" id="saas-other" placeholder="Aggiungi SaaS e premi Invio..." onkeypress="addOtherSaaS(event)" style="padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 13px;">
+                </div>
+            </div>
+
+            <div class="formal-card" id="mdm-software-card" style="display: none;">
+                <div class="card-title">4. MDM Local Software Deployment</div>
+                <div style="font-size: 11px; opacity: 0.6; margin-bottom: 10px;">Distribuzione pacchetti su Mac, Windows e Android.</div>
+                
+                <div class="input-group">
+                    <label>Inbuilt Software Packages</label>
+                    <input type="text" id="mdm-search" class="search-bar" placeholder="Cerca app locale (es. Chrome, Docker)..." oninput="filterMDMList()">
+                    <div class="scroll-list-container" id="mdm-list"></div>
+                </div>
+
+                <div class="checkbox-row green-style" id="store-apple-row" style="display:none;" onclick="toggleCheckbox('mdm-store-apple')">
+                    <input type="checkbox" id="mdm-store-apple">
+                    <label>Deploy via Apple App Store / VPP</label>
+                </div>
+                <div class="checkbox-row green-style" id="store-android-row" style="display:none;" onclick="toggleCheckbox('mdm-store-android')">
+                    <input type="checkbox" id="mdm-store-android">
+                    <label>Deploy via Google Play Enterprise</label>
+                </div>
+                <div class="checkbox-row green-style" onclick="toggleCheckbox('mdm-custom')">
+                    <input type="checkbox" id="mdm-custom">
+                    <label>Deploy Custom Package (.pkg, .msi, .apk)</label>
+                </div>
             </div>
         </div>
 
         <div class="timeline-area">
             <div class="phase-section">
                 <div class="phase-title">Onboarding Tasks (Ordinati per Data)</div>
-                <div id="dynamic-tasks-container">
-                    </div>
+                <div id="dynamic-tasks-container"></div>
             </div>
         </div>
     </div>
@@ -166,23 +160,47 @@
 
 <script>
     let maxDevices = 25;
+    
+    // Dati Liste
+    let saasApps = ["1Password", "Adobe", "Aircall", "Asana", "Atlassian", "AWS", "Datadog", "Figma", "Github", "Gitlab", "Google Workspace", "Jira Cloud", "Microsoft 365", "Notion", "Okta", "Salesforce", "Slack", "Zoom"];
+    let selectedSaaS = [];
 
-    // Database Master dei Task Aggiornato
+    const rawMDMApps = "010 Editor, 1Password, 7-zip, 8x8 Work, Abstract, Adobe Acrobat Pro DC, Adobe Acrobat Reader, Adobe Creative Cloud, Adobe Digital Editions, Adobe DNG Converter, Aircall, Airtame, Amazon Chime, Amazon DCV, Android Studio, Anka, AnyDesk, Apparency, AppCleaner, Arc, Archaeology, Asana, Audacity, Authy, Avast Secure Browser, AWS Client VPN, balenaEtcher, BBEdit, BetterDisplay, Beyond Compare, Bitwarden, Blender, Box, Box Drive, Brave, Bruno, calibre, CamScanner, Camtasia, Canva, ChatGPT, ChatGPT Atlas, ChatGPT Desktop, Cisco Jabber, Citrix Workspace, Claude, Claude by Anthropic, CleanMyMac, CleanShot X, ClickUp, CLion, Clockify Desktop, Cloudflare WARP, Company Portal, Connect Fonts, CotEditor, CrashPlan, Cursor, Cyberduck, Dash, DataGrip, DB Browser for SQLite, DBeaver, DBeaverEE, DBeaverLite, DBeaverUltimate, DeepL, Dialpad, Discord, DisplayLink USB Graphics Software, Docker Desktop, draw.io, Dropbox, Eclipse IDE, Egnyte, Elgato Control Center, Elgato Stream Deck, Evernote, ExpressVPN, Figma, FileMaker Pro, Fork, Front, Ghostty, GIMP, GitHub, GitHub Desktop, GitKraken, Gmail, GoLand, Google Authenticator, Google Calendar, Google Chat, Google Chrome, Google Docs, Google Drive, Google Gemini, Google Lens, Google Maps, Google Meet, Google Sheets, Google Slides, Google Tasks, Google Translate, GPG Suite, Grammarly Desktop, Granola, HubSpot, Hyper, iMazing Profile Editor, Inkscape, Insomnia, IntelliJ IDEA CE, IntelliJ IDEA Ultimate, iTerm2, Jabra Direct, JetBrains Toolbox, Jira, KeePassXC, Keeper Password Manager, Keka, LastPass, LastPass Password Manager, Lens, LibreOffice, Linear, Little Snitch, Logi Options+, Loom, LuLu, Maccy, Mattermost, Messenger, Microsoft Authenticator, Microsoft Auto Update, Microsoft Edge, Microsoft Excel, Microsoft OneDrive, Microsoft OneNote, Microsoft Outlook, Microsoft PowerPoint, Microsoft Teams, Microsoft Visual Studio Code, Microsoft Word, Miro, MongoDB Compass, Mozilla Firefox, MySQL Workbench, Nextcloud, NordPass, NordVPN, Notepad++, Notion, Notion Calendar, Nova, Nudge, OBS, Obsidian, Okta Verify, OmniGraffle, Omnissa Horizon Client, OneDrive, Opera, OrbStack, P4V, Parallels Desktop, Perplexity AI, pgAdmin4, PhpStorm, Podman Desktop, Postman, Pritunl, Privileges, Proton Mail, Proton VPN, ProtonVPN, Proxifier, PuTTY, PyCharm Community Edition, PyCharm Professional, Qonto, Quip, Rancher Desktop, RapidAPI, Raycast, Rectangle, Rider, Royal TSX, RubyMine, RustRover, Salesforce, Santa, Shottr, Signal, Sketch, Slack, Snagit, Sonos, SourceTree, Sourcetree, Splashtop Business, Splashtop Streamer, Spotify, Stats, Steam, Sublime Merge, Sublime Text, Surfshark, Suspicious Package, Tableau Desktop, TablePlus, Tailscale, TeamViewer, Telegram, Teleport Connect, Teleport Suite, TextExpander, Thunderbird, Todoist, Tower, Transmit, Trello, Tunnelblick, Twingate, UTM, VirtualBox, Viscosity, VLC media player, VNC Viewer, Wacom Tablet, Webex, WebStorm, WhatsApp, WhatsApp Business, Windows App, Windsurf, Wireshark, Wrike, Yubico Authenticator, Yubikey Manager, Zed, Zeplin, Zoom, Zoom Cloud Meetings";
+    let mdmApps = rawMDMApps.split(', ').sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    let selectedMDMApps = [];
+
+    // Master Tasks
     const masterTasks = [
-        { id: "task-iam", req: "all", title: "Kick-off & Zero-Touch Strategy Alignment", time: "Stima: 1 ora", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Onboarding Team" },
-        { id: "task-idp-entra", req: "idp-entra", title: "Integrazione Entra ID (Azure AD) SSO & Provisioning", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial IAM Specialist" },
-        { id: "task-idp-google", req: "idp-google", title: "Configurazione Google Workspace SSO & Directory", time: "Stima: 1.5 ore", defaultOwner: "Google Workspace Admin", defaultSupport: "Factorial IAM Specialist" },
-        { id: "task-idp-okta", req: "idp-okta", title: "Integrazione Okta SSO & Provisioning", time: "Stima: 2 ore", defaultOwner: "Okta Admin", defaultSupport: "Factorial IAM Specialist" },
-        { id: "task-hris-sync", req: "hris", title: "Integrazione HRIS: Sincronizzazione Utenti e Ruoli", time: "Stima: 1 ora", defaultOwner: "HR Admin", defaultSupport: "Factorial Integration Team" },
-        { id: "task-abm", req: "apple", title: "Apple Business Manager (ABM) & MDM Token Setup", time: "Stima: 1.5 ore", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Apple Specialist" },
-        { id: "task-vpp", req: "apple", title: "Apple Volume Purchase Program (VPP) per Licenze", time: "Stima: 30 min", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Apple Specialist" },
-        { id: "task-win1", req: "win", title: "Verifica Licenze Microsoft EMS E3/E5 per Autopilot", time: "Stima: 30 min", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial Windows Specialist" },
-        { id: "task-win2", req: "win", title: "Integrazione Entra ID Domain & Autopilot MDM", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial Windows Specialist" },
-        { id: "task-lin", req: "lin", title: "Deploy Script di Sicurezza Linux Fleet", time: "Stima: 1 ora", defaultOwner: "SysAdmin Cliente", defaultSupport: "Factorial Linux Team" },
-        { id: "task-and", req: "and", title: "Configurazione Android Enterprise (Zero-Touch)", time: "Stima: 1.5 ore", defaultOwner: "Mobile Admin", defaultSupport: "Factorial Mobile Team" }
+        { id: "task-iam", req: "all", title: "Kick-off & Zero-Touch Strategy Alignment", time: "Stima: 1 ora", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Onboarding" },
+        { id: "task-idp-entra", req: "idp-entra", title: "Integrazione Entra ID (Azure AD) SSO", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial IAM Spec" },
+        { id: "task-hris-sync", req: "hris", title: "Integrazione HRIS: Sincronizzazione Utenti", time: "Stima: 1 ora", defaultOwner: "HR Admin", defaultSupport: "Factorial Integration" },
+        { id: "task-hw-cat", req: "hw", title: "Test Acquisto Device via Catalogo & Logistica", time: "Stima: 30 min", defaultOwner: "IT Manager", defaultSupport: "Factorial Logistics" },
+        { id: "task-saas", req: "saas", title: "SaaS API Provisioning Setup", time: "Stima: 1.5 ore", defaultOwner: "IT Admin", defaultSupport: "Factorial App Integration" },
+        
+        // Nuovi Task MDM Software
+        { id: "task-mdm-apps", req: "mdm-apps", title: "Push MDM Inbuilt Software Packages", time: "Stima: 1.5 ore", defaultOwner: "IT Admin Cliente", defaultSupport: "Factorial MDM Specialist" },
+        { id: "task-store-apple", req: "mdm-store-apple", title: "Integrazione App Store / Apple VPP Software", time: "Stima: 30 min", defaultOwner: "Apple Admin", defaultSupport: "Factorial Apple Spec" },
+        { id: "task-store-android", req: "mdm-store-android", title: "Integrazione Managed Google Play Store", time: "Stima: 30 min", defaultOwner: "Mobile Admin", defaultSupport: "Factorial Android Spec" },
+        { id: "task-mdm-custom", req: "mdm-custom", title: "Test & Deploy Custom Package (.pkg/.msi)", time: "Stima: 2 ore", defaultOwner: "SysAdmin", defaultSupport: "Factorial Solutions Eng" },
+
+        { id: "task-abm", req: "apple", title: "Apple ABM & MDM Token Setup", time: "Stima: 1.5 ore", defaultOwner: "IT Manager", defaultSupport: "Factorial Apple Spec" },
+        { id: "task-win2", req: "win", title: "Entra ID Domain & Autopilot MDM", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial Windows Spec" },
+        { id: "task-lin", req: "lin", title: "Deploy Script Sicurezza Linux", time: "Stima: 1 ora", defaultOwner: "SysAdmin", defaultSupport: "Factorial Linux Team" },
+        { id: "task-and", req: "and", title: "Android Enterprise (Zero-Touch)", time: "Stima: 1.5 ore", defaultOwner: "Mobile Admin", defaultSupport: "Factorial Mobile Team" }
     ];
 
-    function init() { updateInventory(); }
+    function init() { 
+        renderSaaSList();
+        renderMDMList();
+        updateInventory(); 
+    }
+
+    // --- LOGICA UI BASE ---
+    function toggleCheckbox(id) {
+        const cb = document.getElementById(id);
+        cb.checked = !cb.checked;
+        updateInventory();
+    }
 
     function selectTier(devices) {
         maxDevices = devices;
@@ -191,6 +209,53 @@
         updateInventory();
     }
 
+    // --- LOGICA SAAS ---
+    function renderSaaSList() {
+        const container = document.getElementById('saas-list');
+        container.innerHTML = '';
+        saasApps.forEach(app => {
+            const isChecked = selectedSaaS.includes(app) ? 'checked' : '';
+            container.innerHTML += `<div class="list-item"><input type="checkbox" id="saas-${app.replace(/\s/g,'')}" value="${app}" ${isChecked} onchange="handleSaaSChange(this)"><label for="saas-${app.replace(/\s/g,'')}">${app}</label></div>`;
+        });
+    }
+
+    function handleSaaSChange(cb) {
+        if (cb.checked && !selectedSaaS.includes(cb.value)) selectedSaaS.push(cb.value);
+        else if (!cb.checked) selectedSaaS = selectedSaaS.filter(a => a !== cb.value);
+        updateInventory();
+    }
+
+    function addOtherSaaS(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const val = e.target.value.trim();
+            if (val && !saasApps.includes(val)) {
+                saasApps.push(val); selectedSaaS.push(val); e.target.value = '';
+                renderSaaSList(); updateInventory();
+                const list = document.getElementById('saas-list'); list.scrollTop = list.scrollHeight;
+            }
+        }
+    }
+
+    // --- LOGICA MDM SOFTWARE ---
+    function renderMDMList(filter = '') {
+        const container = document.getElementById('mdm-list');
+        container.innerHTML = '';
+        mdmApps.filter(app => app.toLowerCase().includes(filter.toLowerCase())).forEach(app => {
+            const isChecked = selectedMDMApps.includes(app) ? 'checked' : '';
+            container.innerHTML += `<div class="list-item"><input type="checkbox" id="mdm-${app.replace(/[^a-zA-Z0-9]/g,'')}" value="${app}" ${isChecked} onchange="handleMDMChange(this)"><label for="mdm-${app.replace(/[^a-zA-Z0-9]/g,'')}">${app}</label></div>`;
+        });
+    }
+
+    function filterMDMList() { renderMDMList(document.getElementById('mdm-search').value); }
+
+    function handleMDMChange(cb) {
+        if (cb.checked && !selectedMDMApps.includes(cb.value)) selectedMDMApps.push(cb.value);
+        else if (!cb.checked) selectedMDMApps = selectedMDMApps.filter(a => a !== cb.value);
+        updateInventory();
+    }
+
+    // --- LOGICA GLOBALE & TIMELINE ---
     function updateInventory() {
         const apple = parseInt(document.getElementById('os-apple').value) || 0;
         const win = parseInt(document.getElementById('os-win').value) || 0;
@@ -198,70 +263,69 @@
         const and = parseInt(document.getElementById('os-and').value) || 0;
         const total = apple + win + lin + and;
 
-        const idp = document.getElementById('idp-system').value;
-        const hris = document.getElementById('hr-system').value;
+        document.getElementById('inventory-err').style.display = total > maxDevices ? 'block' : 'none';
 
-        const err = document.getElementById('inventory-err');
-        if (total > maxDevices) { err.style.display = 'block'; } 
-        else { err.style.display = 'none'; }
+        // Logica visibilità Card MDM Local Software
+        const mdmCard = document.getElementById('mdm-software-card');
+        const storeApple = document.getElementById('store-apple-row');
+        const storeAndroid = document.getElementById('store-android-row');
 
-        renderDynamicTasks(apple, win, lin, and, idp, hris);
+        if (apple > 0 || win > 0 || and > 0) {
+            mdmCard.style.display = 'flex';
+            storeApple.style.display = apple > 0 ? 'flex' : 'none';
+            storeAndroid.style.display = and > 0 ? 'flex' : 'none';
+        } else {
+            mdmCard.style.display = 'none';
+        }
+
+        renderDynamicTasks(apple, win, lin, and);
     }
 
-    function renderDynamicTasks(apple, win, lin, and, idp, hris) {
+    function renderDynamicTasks(apple, win, lin, and) {
         const container = document.getElementById('dynamic-tasks-container');
-        
         const existingData = {};
         document.querySelectorAll('.task-item').forEach(el => {
-            const taskId = el.dataset.id;
-            existingData[taskId] = {
-                start: document.getElementById(`${taskId}-start`).value,
-                end: document.getElementById(`${taskId}-end`).value,
-                owner: document.getElementById(`${taskId}-owner`).value,
-                support: document.getElementById(`${taskId}-support`).value
-            };
+            const id = el.dataset.id;
+            existingData[id] = { start: document.getElementById(`${id}-start`).value, end: document.getElementById(`${id}-end`).value, owner: document.getElementById(`${id}-owner`).value, support: document.getElementById(`${id}-support`).value };
         });
 
         container.innerHTML = '';
+        const idp = document.getElementById('idp-system').value;
+        const hris = document.getElementById('hr-system').value;
+        const hwChecked = document.getElementById('hw-catalogue').checked;
+        const storeApp = document.getElementById('mdm-store-apple').checked && apple > 0;
+        const storeAnd = document.getElementById('mdm-store-android').checked && and > 0;
+        const customMdm = document.getElementById('mdm-custom').checked;
 
         let activeTasks = masterTasks.filter(t => 
             t.req === 'all' || 
-            (t.req === 'apple' && apple > 0) || 
-            (t.req === 'win' && win > 0) || 
-            (t.req === 'lin' && lin > 0) || 
-            (t.req === 'and' && and > 0) ||
-            (t.req === `idp-${idp}`) || 
-            (t.req === 'hris' && hris !== 'other')
+            (t.req === 'apple' && apple > 0) || (t.req === 'win' && win > 0) || (t.req === 'lin' && lin > 0) || (t.req === 'and' && and > 0) ||
+            (t.req === `idp-${idp}`) || (t.req === 'hris' && hris !== 'other') || (t.req === 'hw' && hwChecked) ||
+            (t.req === 'saas' && selectedSaaS.length > 0) ||
+            (t.req === 'mdm-apps' && selectedMDMApps.length > 0) ||
+            (t.req === 'mdm-store-apple' && storeApp) ||
+            (t.req === 'mdm-store-android' && storeAnd) ||
+            (t.req === 'mdm-custom' && customMdm)
         );
 
         activeTasks.forEach((t) => {
             const data = existingData[t.id] || {};
-            const div = document.createElement('div');
-            div.className = 'task-item';
-            div.dataset.id = t.id;
+            const div = document.createElement('div'); div.className = 'task-item'; div.dataset.id = t.id;
             
-            // Personalizza dinamicamente il titolo del task HRIS
             let taskTitle = t.title;
-            if(t.req === 'hris') {
-                const hrisName = document.getElementById('hr-system').options[document.getElementById('hr-system').selectedIndex].text;
-                taskTitle = `Integrazione HRIS (${hrisName}): Sincronizzazione Utenti`;
-            }
+            if(t.req === 'hris') taskTitle = `Integrazione HRIS (${document.getElementById('hr-system').options[document.getElementById('hr-system').selectedIndex].text})`;
+            else if (t.req === 'saas') taskTitle = `SaaS Provisioning (${selectedSaaS.length} Apps: ${selectedSaaS.slice(0, 2).join(', ')}${selectedSaaS.length > 2 ? '...' : ''})`;
+            else if (t.req === 'mdm-apps') taskTitle = `Local Software MDM Push (${selectedMDMApps.length} Pkgs: ${selectedMDMApps.slice(0, 2).join(', ')}${selectedMDMApps.length > 2 ? '...' : ''})`;
 
-            // Aggiungiamo un data-title per l'esportazione SVG
             div.dataset.title = taskTitle;
-
             div.innerHTML = `
-                <div class="task-header">
-                    <span>${taskTitle}</span>
-                    <span class="task-time">${t.time}</span>
-                </div>
+                <div class="task-header"><span>${taskTitle}</span><span class="task-time">${t.time}</span></div>
                 <div class="task-grid">
                     <div class="input-group"><label>Inizio</label><input type="date" id="${t.id}-start" class="sort-date" value="${data.start || ''}" onchange="sortTasks()"></div>
-                    <div class="input-group"><label>Fine/Deadline</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>
+                    <div class="input-group"><label>Fine</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>
                     <div class="input-group"><label>Owner</label><input type="text" id="${t.id}-owner" value="${data.owner || t.defaultOwner}"></div>
-                    <div class="input-group"><label>Factorial Support</label><input type="text" id="${t.id}-support" value="${data.support || t.defaultSupport}"></div>
-                </div>
-            `;
+                    <div class="input-group"><label>Factorial</label><input type="text" id="${t.id}-support" value="${data.support || t.defaultSupport}"></div>
+                </div>`;
             container.appendChild(div);
         });
         sortTasks();
@@ -269,68 +333,26 @@
 
     function sortTasks() {
         const container = document.getElementById('dynamic-tasks-container');
-        const tasks = Array.from(container.children);
-        
-        tasks.sort((a, b) => {
-            const dateA = a.querySelector('.sort-date').value;
-            const dateB = b.querySelector('.sort-date').value;
-            
-            if (!dateA && !dateB) return 0;
-            if (!dateA) return 1;
-            if (!dateB) return -1;
-            
-            return new Date(dateA) - new Date(dateB);
-        });
-        
-        tasks.forEach(task => container.appendChild(task));
+        Array.from(container.children).sort((a, b) => {
+            const dA = a.querySelector('.sort-date').value, dB = b.querySelector('.sort-date').value;
+            if (!dA && !dB) return 0; if (!dA) return 1; if (!dB) return -1;
+            return new Date(dA) - new Date(dB);
+        }).forEach(task => container.appendChild(task));
     }
 
-    // Motore Esportazione SVG Dinamico
     function exportSVG() {
         const clientName = document.getElementById('client-name').value || 'Acme_Corp';
-        const hrisName = document.getElementById('hr-system').options[document.getElementById('hr-system').selectedIndex].text;
-        const idpName = document.getElementById('idp-system').options[document.getElementById('idp-system').selectedIndex].text;
-        
-        const dark = "#1a1a1a", green = "#42B891", pink = "#f06a6a", grey = "#e0e0e0";
-        
-        const tasks = document.querySelectorAll('.task-item');
         let svgTasks = '';
-        
-        tasks.forEach((el, index) => {
-            const taskId = el.dataset.id;
-            const title = el.dataset.title;
-            const start = document.getElementById(`${taskId}-start`).value || 'TBD';
-            const end = document.getElementById(`${taskId}-end`).value || 'TBD';
-            const owner = document.getElementById(`${taskId}-owner`).value || 'TBD';
-            
-            svgTasks += `
-                <text x="50" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">${index + 1}. ${title}</text>
-                <text x="500" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">Start: ${start}</text>
-                <text x="650" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">End: ${end}</text>
-                <text x="800" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
-                <line x1="50" y1="${190 + (index * 45)}" x2="950" y2="${190 + (index * 45)}" stroke="${grey}" stroke-dasharray="2 2"/>
-            `;
+        document.querySelectorAll('.task-item').forEach((el, index) => {
+            const id = el.dataset.id;
+            svgTasks += `<text x="50" y="${180 + (index * 45)}" fill="#1a1a1a" font-family="DM Sans" font-size="12" font-weight="700">${index + 1}. ${el.dataset.title}</text>
+                <text x="650" y="${180 + (index * 45)}" fill="#1a1a1a" font-family="DM Sans" font-size="12">Start: ${document.getElementById(`${id}-start`).value || 'TBD'} | End: ${document.getElementById(`${id}-end`).value || 'TBD'}</text>
+                <text x="850" y="${180 + (index * 45)}" fill="#1a1a1a" font-family="DM Sans" font-size="12">Owner: ${document.getElementById(`${id}-owner`).value || 'TBD'}</text>
+                <line x1="50" y1="${190 + (index * 45)}" x2="950" y2="${190 + (index * 45)}" stroke="#e0e0e0" stroke-dasharray="2 2"/>`;
         });
-
-        const svgHeight = 250 + (tasks.length * 45);
-
-        const svg = `<svg width="1000" height="${svgHeight}" viewBox="0 0 1000 ${svgHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1000" height="${svgHeight}" fill="white"/>
-            <text x="50" y="50" fill="${pink}" font-family="DM Sans" font-size="22" font-weight="700">FACTORIAL IT / ONBOARDING PROJECT PLAN</text>
-            <text x="50" y="80" fill="${dark}" font-family="DM Sans" font-size="14">Cliente: ${clientName} | Tier: ${maxDevices} Dispositivi</text>
-            <text x="50" y="100" fill="${dark}" font-family="DM Sans" font-size="12">Ecosistema: ${idpName} (IdP) | ${hrisName} (HR)</text>
-            
-            <rect x="50" y="125" width="900" height="30" fill="${green}" rx="5"/>
-            <text x="65" y="145" fill="white" font-family="DM Sans" font-size="14" font-weight="700">TIMELINE TASK (Ordinati per data)</text>
-            
-            ${svgTasks}
-        </svg>`;
-
-        const blob = new Blob([svg], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `ProjectPlan_${clientName}.txt`;
-        link.click();
+        const h = 250 + (document.querySelectorAll('.task-item').length * 45);
+        const svg = `<svg width="1000" height="${h}" viewBox="0 0 1000 ${h}" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="1000" height="${h}" fill="white"/><text x="50" y="50" fill="#f06a6a" font-family="DM Sans" font-size="22" font-weight="700">FACTORIAL IT / PROJECT PLAN</text><text x="50" y="80" fill="#1a1a1a" font-family="DM Sans" font-size="14">Cliente: ${clientName}</text><rect x="50" y="125" width="900" height="30" fill="#42B891" rx="5"/><text x="65" y="145" fill="white" font-family="DM Sans" font-size="14" font-weight="700">TIMELINE TASK</text>${svgTasks}</svg>`;
+        const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([svg], { type: 'text/plain' })); link.download = `Plan_${clientName}.svg`; link.click();
     }
 
     window.onload = init;
