@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial IT - Dynamic Project Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-green: #42B891; --factorial-pink: #f06a6a; --bg-light: #FFFFFF; --text-dark: #1a1a1a; --border-muted: #e0e0e0; --module-bg: #f2faf7; }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        .utility-header { width: 100%; max-width: 1200px; padding: 25px 20px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;}
+        .utility-text { color: var(--factorial-pink); font-weight: 700; font-size: 14px; text-transform: uppercase; }
+        .header { text-align: center; margin-bottom: 30px; padding: 0 20px; }
+        .header h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; margin: 0; }
+        .header h1 span.pink { color: var(--factorial-pink); }
+        .main-container { display: grid; grid-template-columns: 320px 1fr; gap: 30px; width: 95%; max-width: 1250px; margin-bottom: 60px; }
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .formal-card { background: #FFFFFF; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); }
+        .card-title { color: var(--factorial-pink); font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--border-muted); padding-bottom: 8px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .input-group label { font-size: 12px; font-weight: 700; opacity: 0.7; text-transform: uppercase; }
+        .input-group input, .input-group select { padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 14px; }
+        .tier-card { border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; background: #fafafa; }
+        .tier-card:hover { border-color: var(--primary-green); }
+        .tier-card.active { border-color: var(--primary-green); background: var(--module-bg); box-shadow: 0 4px 12px rgba(66, 184, 145, 0.15); }
+        .tier-card .tier-name { font-weight: 700; font-size: 16px; }
+        
+        .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .os-input { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-muted);}
+        .os-input label { font-size: 12px; font-weight: 700; margin:0; }
+        .os-input input { width: 50px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+
+        .timeline-area { display: flex; flex-direction: column; gap: 30px; }
+        .phase-section { background-color: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); }
+        .phase-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .task-item { background: white; border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; margin-bottom: 15px; transition: transform 0.3s ease; }
+        .task-header { font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 10px;}
+        .task-time { font-size: 12px; background: #ffebeb; color: var(--factorial-pink); padding: 4px 8px; border-radius: 4px; }
+        .task-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-items: end; }
+        .error-msg { color: var(--factorial-pink); font-size: 12px; font-weight: 700; margin-top: 5px; display: none; }
+
+        .action-btns-container { width: 100%; display: flex; justify-content: center; gap: 20px; margin-bottom: 80px; }
+        .action-btn { background-color: var(--text-dark); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .action-btn:hover { transform: scale(1.1); background-color: var(--factorial-pink); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Dynamic <span class="pink">Project Plan</span> Setup</h1>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="formal-card">
+                <div class="card-title">1. Setup Cliente & Ecosistema</div>
+                <div class="input-group"><label>Nome Azienda</label><input type="text" id="client-name" placeholder="Es. Acme Corp"></div>
+                
+                <div class="input-group">
+                    <label>Identity Provider (IdP)</label>
+                    <select id="idp-system" onchange="updateInventory()">
+                        <option value="entra">Microsoft Entra ID (Azure AD)</option>
+                        <option value="google">Google Workspace</option>
+                        <option value="okta">Okta</option>
+                        <option value="other">Altro / Nessuno</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>HRIS (Sistema HR)</label>
+                    <select id="hr-system" onchange="updateInventory()">
+                        <option value="factorial">Factorial</option>
+                        <option value="afas_software">AFAS Software</option>
+                        <option value="alexishr">AlexisHR</option>
+                        <option value="bamboohr">BambooHR</option>
+                        <option value="boondmanager">BoondManager</option>
+                        <option value="breathe_hr">Breathe HR</option>
+                        <option value="catalystone">CatalystOne</option>
+                        <option value="cezanne_hr">Cezanne HR</option>
+                        <option value="charlie">Charlie</option>
+                        <option value="deel">Deel</option>
+                        <option value="employment_hero">Employment Hero</option>
+                        <option value="eurecia">Eurécia</option>
+                        <option value="google_workspace">Google Workspace</option>
+                        <option value="hailey_hr">Hailey HR</option>
+                        <option value="heavenhr">HeavenHR</option>
+                        <option value="hibob">HiBob</option>
+                        <option value="hr_works">HR WORKS</option>
+                        <option value="humaans">Humaans</option>
+                        <option value="iris_cascade">IRIS Cascade</option>
+                        <option value="kenjo">Kenjo</option>
+                        <option value="leapsome">Leapsome</option>
+                        <option value="lucca">Lucca</option>
+                        <option value="mhr_people_first">MHR People First</option>
+                        <option value="microsoft_entra_id">Microsoft Entra ID</option>
+                        <option value="nibelis">Nibelis</option>
+                        <option value="nmbrs">Nmbrs</option>
+                        <option value="officient">Officient</option>
+                        <option value="okta">Okta</option>
+                        <option value="oysterhr">OysterHR</option>
+                        <option value="payfit">PayFit</option>
+                        <option value="paylocity">Paylocity</option>
+                        <option value="peoplehr">PeopleHR</option>
+                        <option value="personio">Personio</option>
+                        <option value="planday">Planday</option>
+                        <option value="remote">Remote</option>
+                        <option value="rippling">Rippling</option>
+                        <option value="sage_hr">Sage HR</option>
+                        <option value="sap_successfactors">SAP SuccessFactors</option>
+                        <option value="sd_worx">SD Worx</option>
+                        <option value="sesame_hr">Sesame HR</option>
+                        <option value="silae">Silae</option>
+                        <option value="simployer">Simployer</option>
+                        <option value="tellent_hr">Tellent HR</option>
+                        <option value="trinet">TriNet (Zenefits)</option>
+                        <option value="ukg_pro">UKG Pro</option>
+                        <option value="ukg_ready">UKG Ready</option>
+                        <option value="visma_raet">Visma Raet - Youforce</option>
+                        <option value="workday">Workday</option>
+                        <option value="workforce">workforce.com</option>
+                        <option value="zelt">Zelt</option>
+                        <option value="other">Altro / Nessuno</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="formal-card">
+                <div class="card-title">2. Tier Pricing</div>
+                <div class="tier-card active" onclick="selectTier(25)" id="tier-25">
+                    <div class="tier-name">Fino a 25 Dispositivi</div>
+                </div>
+                <div class="tier-card" onclick="selectTier(50)" id="tier-50">
+                    <div class="tier-name">Fino a 50 Dispositivi</div>
+                </div>
+                <div class="tier-card" onclick="selectTier(100)" id="tier-100">
+                    <div class="tier-name">Fino a 100 Dispositivi</div>
+                </div>
+            </div>
+
+            <div class="formal-card">
+                <div class="card-title">3. Inventario OS</div>
+                <div class="os-grid">
+                    <div class="os-input"><label>Apple</label><input type="number" id="os-apple" value="0" min="0" onchange="updateInventory()"></div>
+                    <div class="os-input"><label>Windows</label><input type="number" id="os-win" value="0" min="0" onchange="updateInventory()"></div>
+                    <div class="os-input"><label>Linux</label><input type="number" id="os-lin" value="0" min="0" onchange="updateInventory()"></div>
+                    <div class="os-input"><label>Android</label><input type="number" id="os-and" value="0" min="0" onchange="updateInventory()"></div>
+                </div>
+                <div class="error-msg" id="inventory-err">Attenzione: La somma dei device supera il Tier selezionato!</div>
+            </div>
+        </div>
+
+        <div class="timeline-area">
+            <div class="phase-section">
+                <div class="phase-title">Onboarding Tasks (Ordinati per Data)</div>
+                <div id="dynamic-tasks-container">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-btns-container">
+        <button class="action-btn" onclick="exportSVG()" title="Export Project Plan (SVG)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </button>
+    </div>
+
+<script>
+    let maxDevices = 25;
+
+    // Database Master dei Task Aggiornato
+    const masterTasks = [
+        { id: "task-iam", req: "all", title: "Kick-off & Zero-Touch Strategy Alignment", time: "Stima: 1 ora", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Onboarding Team" },
+        { id: "task-idp-entra", req: "idp-entra", title: "Integrazione Entra ID (Azure AD) SSO & Provisioning", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial IAM Specialist" },
+        { id: "task-idp-google", req: "idp-google", title: "Configurazione Google Workspace SSO & Directory", time: "Stima: 1.5 ore", defaultOwner: "Google Workspace Admin", defaultSupport: "Factorial IAM Specialist" },
+        { id: "task-idp-okta", req: "idp-okta", title: "Integrazione Okta SSO & Provisioning", time: "Stima: 2 ore", defaultOwner: "Okta Admin", defaultSupport: "Factorial IAM Specialist" },
+        { id: "task-hris-sync", req: "hris", title: "Integrazione HRIS: Sincronizzazione Utenti e Ruoli", time: "Stima: 1 ora", defaultOwner: "HR Admin", defaultSupport: "Factorial Integration Team" },
+        { id: "task-abm", req: "apple", title: "Apple Business Manager (ABM) & MDM Token Setup", time: "Stima: 1.5 ore", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Apple Specialist" },
+        { id: "task-vpp", req: "apple", title: "Apple Volume Purchase Program (VPP) per Licenze", time: "Stima: 30 min", defaultOwner: "IT Manager Cliente", defaultSupport: "Factorial Apple Specialist" },
+        { id: "task-win1", req: "win", title: "Verifica Licenze Microsoft EMS E3/E5 per Autopilot", time: "Stima: 30 min", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial Windows Specialist" },
+        { id: "task-win2", req: "win", title: "Integrazione Entra ID Domain & Autopilot MDM", time: "Stima: 2 ore", defaultOwner: "Microsoft Admin", defaultSupport: "Factorial Windows Specialist" },
+        { id: "task-lin", req: "lin", title: "Deploy Script di Sicurezza Linux Fleet", time: "Stima: 1 ora", defaultOwner: "SysAdmin Cliente", defaultSupport: "Factorial Linux Team" },
+        { id: "task-and", req: "and", title: "Configurazione Android Enterprise (Zero-Touch)", time: "Stima: 1.5 ore", defaultOwner: "Mobile Admin", defaultSupport: "Factorial Mobile Team" }
+    ];
+
+    function init() { updateInventory(); }
+
+    function selectTier(devices) {
+        maxDevices = devices;
+        document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`tier-${devices}`).classList.add('active');
+        updateInventory();
+    }
+
+    function updateInventory() {
+        const apple = parseInt(document.getElementById('os-apple').value) || 0;
+        const win = parseInt(document.getElementById('os-win').value) || 0;
+        const lin = parseInt(document.getElementById('os-lin').value) || 0;
+        const and = parseInt(document.getElementById('os-and').value) || 0;
+        const total = apple + win + lin + and;
+
+        const idp = document.getElementById('idp-system').value;
+        const hris = document.getElementById('hr-system').value;
+
+        const err = document.getElementById('inventory-err');
+        if (total > maxDevices) { err.style.display = 'block'; } 
+        else { err.style.display = 'none'; }
+
+        renderDynamicTasks(apple, win, lin, and, idp, hris);
+    }
+
+    function renderDynamicTasks(apple, win, lin, and, idp, hris) {
+        const container = document.getElementById('dynamic-tasks-container');
+        
+        const existingData = {};
+        document.querySelectorAll('.task-item').forEach(el => {
+            const taskId = el.dataset.id;
+            existingData[taskId] = {
+                start: document.getElementById(`${taskId}-start`).value,
+                end: document.getElementById(`${taskId}-end`).value,
+                owner: document.getElementById(`${taskId}-owner`).value,
+                support: document.getElementById(`${taskId}-support`).value
+            };
+        });
+
+        container.innerHTML = '';
+
+        let activeTasks = masterTasks.filter(t => 
+            t.req === 'all' || 
+            (t.req === 'apple' && apple > 0) || 
+            (t.req === 'win' && win > 0) || 
+            (t.req === 'lin' && lin > 0) || 
+            (t.req === 'and' && and > 0) ||
+            (t.req === `idp-${idp}`) || 
+            (t.req === 'hris' && hris !== 'other')
+        );
+
+        activeTasks.forEach((t) => {
+            const data = existingData[t.id] || {};
+            const div = document.createElement('div');
+            div.className = 'task-item';
+            div.dataset.id = t.id;
+            
+            // Personalizza dinamicamente il titolo del task HRIS
+            let taskTitle = t.title;
+            if(t.req === 'hris') {
+                const hrisName = document.getElementById('hr-system').options[document.getElementById('hr-system').selectedIndex].text;
+                taskTitle = `Integrazione HRIS (${hrisName}): Sincronizzazione Utenti`;
+            }
+
+            // Aggiungiamo un data-title per l'esportazione SVG
+            div.dataset.title = taskTitle;
+
+            div.innerHTML = `
+                <div class="task-header">
+                    <span>${taskTitle}</span>
+                    <span class="task-time">${t.time}</span>
+                </div>
+                <div class="task-grid">
+                    <div class="input-group"><label>Inizio</label><input type="date" id="${t.id}-start" class="sort-date" value="${data.start || ''}" onchange="sortTasks()"></div>
+                    <div class="input-group"><label>Fine/Deadline</label><input type="date" id="${t.id}-end" value="${data.end || ''}"></div>
+                    <div class="input-group"><label>Owner</label><input type="text" id="${t.id}-owner" value="${data.owner || t.defaultOwner}"></div>
+                    <div class="input-group"><label>Factorial Support</label><input type="text" id="${t.id}-support" value="${data.support || t.defaultSupport}"></div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+        sortTasks();
+    }
+
+    function sortTasks() {
+        const container = document.getElementById('dynamic-tasks-container');
+        const tasks = Array.from(container.children);
+        
+        tasks.sort((a, b) => {
+            const dateA = a.querySelector('.sort-date').value;
+            const dateB = b.querySelector('.sort-date').value;
+            
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;
+            if (!dateB) return -1;
+            
+            return new Date(dateA) - new Date(dateB);
+        });
+        
+        tasks.forEach(task => container.appendChild(task));
+    }
+
+    // Motore Esportazione SVG Dinamico
+    function exportSVG() {
+        const clientName = document.getElementById('client-name').value || 'Acme_Corp';
+        const hrisName = document.getElementById('hr-system').options[document.getElementById('hr-system').selectedIndex].text;
+        const idpName = document.getElementById('idp-system').options[document.getElementById('idp-system').selectedIndex].text;
+        
+        const dark = "#1a1a1a", green = "#42B891", pink = "#f06a6a", grey = "#e0e0e0";
+        
+        const tasks = document.querySelectorAll('.task-item');
+        let svgTasks = '';
+        
+        tasks.forEach((el, index) => {
+            const taskId = el.dataset.id;
+            const title = el.dataset.title;
+            const start = document.getElementById(`${taskId}-start`).value || 'TBD';
+            const end = document.getElementById(`${taskId}-end`).value || 'TBD';
+            const owner = document.getElementById(`${taskId}-owner`).value || 'TBD';
+            
+            svgTasks += `
+                <text x="50" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">${index + 1}. ${title}</text>
+                <text x="500" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">Start: ${start}</text>
+                <text x="650" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">End: ${end}</text>
+                <text x="800" y="${180 + (index * 45)}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
+                <line x1="50" y1="${190 + (index * 45)}" x2="950" y2="${190 + (index * 45)}" stroke="${grey}" stroke-dasharray="2 2"/>
+            `;
+        });
+
+        const svgHeight = 250 + (tasks.length * 45);
+
+        const svg = `<svg width="1000" height="${svgHeight}" viewBox="0 0 1000 ${svgHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1000" height="${svgHeight}" fill="white"/>
+            <text x="50" y="50" fill="${pink}" font-family="DM Sans" font-size="22" font-weight="700">FACTORIAL IT / ONBOARDING PROJECT PLAN</text>
+            <text x="50" y="80" fill="${dark}" font-family="DM Sans" font-size="14">Cliente: ${clientName} | Tier: ${maxDevices} Dispositivi</text>
+            <text x="50" y="100" fill="${dark}" font-family="DM Sans" font-size="12">Ecosistema: ${idpName} (IdP) | ${hrisName} (HR)</text>
+            
+            <rect x="50" y="125" width="900" height="30" fill="${green}" rx="5"/>
+            <text x="65" y="145" fill="white" font-family="DM Sans" font-size="14" font-weight="700">TIMELINE TASK (Ordinati per data)</text>
+            
+            ${svgTasks}
+        </svg>`;
+
+        const blob = new Blob([svg], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `ProjectPlan_${clientName}.txt`;
+        link.click();
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
