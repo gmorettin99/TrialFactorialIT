@@ -85,6 +85,10 @@
         .os-task-grid input { padding: 6px; font-size: 12px; width: 100%; min-width: 0; box-sizing: border-box;}
         .os-task-grid label { font-size: 10px; }
         
+        .prereq-list { display: flex; flex-direction: column; gap: 6px; margin-top: 5px; background: #fafafa; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
+        .prereq-list label { text-transform: none; font-weight: normal; font-size: 13px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .prereq-list label input { margin: 0; accent-color: var(--primary-green); width: 16px; height: 16px; }
+
         .action-btns-container { width: 100%; display: flex; justify-content: center; gap: 20px; margin-bottom: 80px; margin-top: 20px;}
         .action-btn { background-color: var(--text-dark); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .action-btn:hover { transform: scale(1.1); background-color: var(--factorial-pink); }
@@ -303,6 +307,43 @@
                             <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-hr-start" onchange="sortTasks(this.closest('.sortable-list'))"></div>
                             <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hr" placeholder=""></div>
                             <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hr" placeholder=""></div>
+                        </div>
+                    </div>
+
+                    <div class="task-item" id="w1-apple-prereq" data-id="w1-apple-prereq">
+                        <div class="task-header"><span id="lbl-w1-apple">Apple MDM Prerequisites (Complete to start next week)</span><span class="task-time">Setup</span></div>
+                        <div class="task-grid">
+                            <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-apple-prereq-start" onchange="sortTasks(this.closest('.sortable-list'))"></div>
+                            <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-apple-prereq"></div>
+                            <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-apple-prereq"></div>
+                            <div class="input-group span-full" style="margin-top: 10px;">
+                                <label>Apple Onboarding Checklist</label>
+                                <div class="prereq-list">
+                                    <label><input type="checkbox"> Setting up Apple Business Manager (ABM) — <strong>Mandatory</strong></label>
+                                    <label><input type="checkbox"> Connecting ABM to Factorial IT (MDM Server Token) — <strong>Mandatory</strong></label>
+                                    <label><input type="checkbox"> Volume Purchase Program (VPP) — Optional</label>
+                                    <label><input type="checkbox"> How to Install and Configure Apple Configurator — Optional</label>
+                                    <label><input type="checkbox"> Adding Devices to ABM via Apple Configurator — Optional</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-item" id="w1-win-prereq" data-id="w1-win-prereq">
+                        <div class="task-header"><span id="lbl-w1-win">Windows MDM Prerequisites (Complete to start next week)</span><span class="task-time">Setup</span></div>
+                        <div class="task-grid">
+                            <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-win-prereq-start" onchange="sortTasks(this.closest('.sortable-list'))"></div>
+                            <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-win-prereq"></div>
+                            <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-win-prereq"></div>
+                            <div class="input-group span-full" style="margin-top: 10px;">
+                                <label>Windows Onboarding Checklist</label>
+                                <div class="prereq-list">
+                                    <label><input type="checkbox"> Obtaining your EMS License — <strong>Mandatory</strong></label>
+                                    <label><input type="checkbox"> Pre-configuring your Microsoft Environment (Domain Setup) — <strong>Mandatory</strong></label>
+                                    <label><input type="checkbox"> Connecting Factorial IT to Microsoft Entra — Optional</label>
+                                    <label><input type="checkbox"> Setting Factorial IT as your MDM in Autopilot — <strong>Mandatory</strong></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -656,6 +697,8 @@
         document.getElementById('w1-hr').style.display = hrisVal !== 'none' ? 'block' : 'none';
         document.getElementById('lbl-w1-hr').innerText = hrisText === 'Factorial' ? "Onboarding Factorial IT: HR integration & initial Set-up" : `HR Integration (${hrisText})`;
         document.getElementById('w1-hw').style.display = hwChecked ? 'block' : 'none';
+        document.getElementById('w1-apple-prereq').style.display = apple > 0 ? 'block' : 'none';
+        document.getElementById('w1-win-prereq').style.display = win > 0 ? 'block' : 'none';
 
         // WEEK 2
         document.getElementById('section-w2').style.display = (apple > 0 || win > 0 || lin > 0 || and > 0 || selectedMDMApps.length > 0 || customMdm) ? 'block' : 'none';
@@ -690,6 +733,7 @@
             existingSaaSData[id] = { start: document.getElementById(`d-${id}-start`)?.value, owner: document.getElementById(`o-${id}`)?.value, support: document.getElementById(`s-${id}`)?.value };
         });
 
+        // Delete all old dynamic saas items except the check-in
         const saasContainer = document.getElementById('dynamic-saas-container');
         saasContainer.innerHTML = '';
         selectedSaaS.forEach((app) => {
@@ -737,6 +781,11 @@
                     let tLabel = el.querySelector('.task-header span') || el.querySelector('.os-task-header span') || el.querySelector('.task-header input');
                     let titleText = tLabel.tagName === 'INPUT' ? tLabel.value : tLabel.innerText;
                     if(isW2Col) titleText = "[OS MDM] " + titleText;
+                    
+                    // Add tag if it's the prereqs checklist
+                    if (el.dataset.id === 'w1-apple-prereq' || el.dataset.id === 'w1-win-prereq') {
+                        titleText += " [Includes MDM Prereq Checklist]";
+                    }
 
                     const inputs = el.querySelectorAll('input[type="date"]');
                     const startVal = inputs[0] ? inputs[0].value || 'TBD' : 'TBD';
@@ -773,7 +822,7 @@
                     }
 
                     svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">• ${titleText}</text>
-                        <text x="350" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}${extraDesc}</text>
+                        <text x="450" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}${extraDesc}</text>
                         <text x="850" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
                         <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
                     currentY += 45;
@@ -784,7 +833,7 @@
         // SVG Render Loops
         svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[1]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[1]}</text>`;
         currentY += 60;
-        printTasks(document.querySelectorAll('#section-w1 .task-item'));
+        printTasks(document.querySelectorAll('#list-w1 > .task-item'));
         currentY += 20;
 
         if(document.getElementById('section-w2').style.display !== 'none') {
@@ -798,8 +847,9 @@
         if(document.getElementById('section-w3').style.display !== 'none') {
             svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[3]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[3]}</text>`;
             currentY += 60;
-            printTasks(document.querySelectorAll('#section-w3 .task-item:not(.dynamic-saas-task)'));
-            printTasks(document.querySelectorAll('.dynamic-saas-task'));
+            printTasks(document.querySelectorAll('#list-w3 > .task-item:not(.dynamic-saas-task)'));
+            printTasks(document.querySelectorAll('#dynamic-saas-container > .dynamic-saas-task'));
+            printTasks(document.querySelectorAll('#w3-chk'));
             currentY += 20;
         }
 
