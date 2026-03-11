@@ -7,13 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary-green: #42B891; --factorial-pink: #f06a6a; --bg-light: #FFFFFF; --text-dark: #1a1a1a; --border-muted: #e0e0e0; --module-bg: #f2faf7; }
+        
         *, *::before, *::after { box-sizing: border-box; }
+        
         body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
-        .header { text-align: center; margin: 30px 0; padding: 0 20px; }
+        .utility-header { width: 100%; max-width: 1200px; padding: 25px 20px; display: flex; justify-content: space-between; align-items: center;}
+        .utility-text { color: var(--factorial-pink); font-weight: 700; font-size: 14px; text-transform: uppercase; }
+        .header { text-align: center; margin-bottom: 30px; padding: 0 20px; }
         .header h1 { font-size: clamp(24px, 4vw, 42px); font-weight: 800; margin: 0; }
         .header h1 span.pink { color: var(--factorial-pink); }
+        
         .main-container { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 30px; width: 95%; max-width: 1400px; margin-bottom: 60px; align-items: start;}
         
+        /* SIDEBAR STYLES */
         .sidebar { display: flex; flex-direction: column; gap: 15px; width: 100%;}
         .formal-card { background: #FFFFFF; padding: 20px; border-radius: 12px; border: 1px solid var(--border-muted); width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
         .card-title { color: var(--text-dark); font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--border-muted); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
@@ -52,7 +58,9 @@
 
         .btn-outline { width: 100%; padding: 10px; border: 1px dashed var(--text-dark); background: transparent; color: var(--text-dark); font-weight: 700; font-family: 'DM Sans'; border-radius: 6px; cursor: pointer; transition: 0.2s;}
         .btn-outline:hover { background: var(--text-dark); color: white;}
+        .btn-outline:disabled { opacity: 0.5; cursor: not-allowed; background: transparent; color: #888; border-color: #888;}
 
+        /* TIMELINE STYLES */
         .timeline-area { display: flex; flex-direction: column; gap: 30px; width: 100%; min-width: 0;}
         .phase-section { background-color: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); width: 100%; overflow: hidden; display: none;}
         .phase-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; border-bottom: 3px solid var(--text-dark); padding-bottom: 10px; color: var(--text-dark);}
@@ -64,11 +72,13 @@
         .task-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; align-items: end; }
         .span-2 { grid-column: span 2; }
         
-        .os-columns-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; margin-bottom: 20px; display: flex; flex-wrap: wrap;}
+        /* OS Columns */
+        .os-columns-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; margin-bottom: 20px; display: none;}
         .os-column { background: white; border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; flex: 1; min-width: 260px; display: none;}
         .os-col-title { font-size: 14px; font-weight: 800; color: var(--primary-green); margin-bottom: 15px; border-bottom: 2px solid var(--module-bg); padding-bottom: 8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;}
         .os-task-item { border: 1px dashed var(--border-muted); border-radius: 6px; padding: 12px; margin-bottom: 15px; background: #fafafa; display: none;}
         .os-task-header { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4; display: flex; justify-content: space-between; gap: 10px;}
+        
         .os-task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .os-task-grid .input-group { margin-bottom: 0; }
         .os-task-grid input { padding: 6px; font-size: 12px; width: 100%; min-width: 0; box-sizing: border-box;}
@@ -80,8 +90,14 @@
         .action-btn { background-color: var(--text-dark); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .action-btn:hover { transform: scale(1.1); background-color: var(--factorial-pink); }
 
-        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } .sidebar { max-width: 700px; margin: 0 auto; } }
-        @media (max-width: 600px) { .task-grid { grid-template-columns: 1fr 1fr; } .task-grid .span-2 { grid-column: span 2; } }
+        @media (max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; }
+            .sidebar { max-width: 700px; margin: 0 auto; }
+        }
+        @media (max-width: 600px) {
+            .task-grid { grid-template-columns: 1fr 1fr; }
+            .task-grid .span-2 { grid-column: span 2; }
+        }
     </style>
 </head>
 <body>
@@ -173,7 +189,7 @@
                     <div class="os-input"><label><svg viewBox="0 0 384 512" width="12" height="12"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Mac</label><input type="number" id="os-apple" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> Win</label><input type="number" id="os-win" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 512 512" width="12" height="12"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> Android</label><input type="number" id="os-and" value="0" min="0" onchange="updateUI()"></div>
-                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Lin</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
+                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Linux</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
                 </div>
 
                 <div style="font-size: 11px; font-weight: 700; margin: 15px 0 10px 0; text-transform: uppercase; color: #666;">Local Deployments</div>
@@ -257,7 +273,7 @@
 
             <div class="formal-card" style="border-left: 4px solid #F39C12;">
                 <div class="card-title" style="color: #F39C12;">4. Check-in & Criteria</div>
-                <button class="btn-outline" style="border-color: #F39C12; color: #F39C12;" onclick="addCustomCriteria()">+ Add Custom Success Criteria</button>
+                <button class="btn-outline" style="border-color: #F39C12; color: #F39C12;" id="btn-add-criteria" onclick="addCustomCriteria()">+ Add Custom Success Criteria (0/3)</button>
             </div>
 
         </div>
@@ -504,8 +520,15 @@
     function handleMDMChange(cb) { if (cb.checked && !selectedMDMApps.includes(cb.value)) selectedMDMApps.push(cb.value); else if (!cb.checked) selectedMDMApps = selectedMDMApps.filter(a => a !== cb.value); updateUI(); }
 
     function addCustomCriteria() {
+        if(customCriteriaId >= 3) {
+            alert("Puoi aggiungere massimo 3 criteri di successo personalizzati.");
+            return;
+        }
+
         customCriteriaId++;
         const id = `t-w4-cust-${customCriteriaId}`;
+        
+        // Nuova struttura con i campi Insert e Description
         const html = `
         <div class="task-item cust-task" id="${id}" data-id="${id}" style="display:block;">
             <div class="task-header"><input type="text" value="Custom success criteria" style="border:none; border-bottom:1px dashed #ccc; font-weight:700; width:100%; color:var(--text-dark); font-family:'DM Sans'; font-size:14px; padding-bottom:5px;" id="lbl-${id}"></div>
@@ -513,12 +536,16 @@
                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-${id}-start"></div>
                 <div class="input-group"><label>Owner</label><input type="text" value="" id="o-${id}" placeholder=""></div>
                 <div class="input-group"><label>Support</label><input type="text" value="" id="s-${id}" placeholder=""></div>
+                
+                <div class="input-group span-2"><label>Insert (Metric / KPI)</label><input type="text" value="" id="ins-${id}" placeholder="Es. Device iscritti, policy inviate..."></div>
+                <div class="input-group span-2"><label>Description</label><input type="text" value="" id="desc-${id}" placeholder="Descrizione del criterio..."></div>
             </div>
         </div>`;
         document.getElementById('custom-criteria-container').insertAdjacentHTML('beforeend', html);
+        
+        document.getElementById('btn-add-criteria').innerText = `+ Add Custom Success Criteria (${customCriteriaId}/3)`;
     }
 
-    // CORE: TOGGLING VISIBILITY WITHOUT LOSING DATA
     function updateUI() {
         const apple = parseInt(document.getElementById('os-apple').value) || 0;
         const win = parseInt(document.getElementById('os-win').value) || 0;
@@ -528,11 +555,9 @@
 
         document.getElementById('inventory-err').style.display = total > maxDevices ? 'block' : 'none';
 
-        // Dynamic Stores based on OS
         document.getElementById('cb-appstore').style.display = apple > 0 ? 'flex' : 'none';
         document.getElementById('cb-play').style.display = and > 0 ? 'flex' : 'none';
 
-        // Values
         const hris = document.getElementById('hr-system');
         const hrisVal = hris.value;
         const hrisText = hris.options[hris.selectedIndex].text;
@@ -586,7 +611,6 @@
         document.getElementById('lbl-w3-saas').innerText = `SaaS Provisioning (${selectedSaaS.length} Apps: ${selectedSaaS.slice(0,3).join(', ')}${selectedSaaS.length>3?'...':''})`;
     }
 
-    // SVG EXPORT ENGINE
     function exportSVG() {
         const clientName = document.getElementById('client-name').value || 'Acme_Corp';
         const dark = "#1a1a1a", grey = "#e0e0e0";
@@ -596,11 +620,9 @@
         const colors = {1: '#f06a6a', 2: '#42B891', 3: '#6C5CE7', 4: '#F39C12'};
         const titles = {1: 'WEEK 1: PLATFORM ONBOARDING', 2: 'WEEK 2: MDM FOR WHICH OS', 3: 'WEEK 3: SAAS & IDP', 4: 'WEEK 4: CHECK-IN & CRITERIA'};
 
-        // Funzione helper per stampare un blocco di task
         const printTasks = (domElements, isW2Col = false) => {
             domElements.forEach((el, i) => {
                 if(el.style.display !== 'none') {
-                    // Prendi i dati
                     let tLabel = el.querySelector('.task-header span') || el.querySelector('.os-task-header span') || el.querySelector('.task-header input');
                     let titleText = tLabel.tagName === 'INPUT' ? tLabel.value : tLabel.innerText;
                     
@@ -614,8 +636,15 @@
                     const textInputs = el.querySelectorAll('input[type="text"]:not([id^="lbl"])');
                     const owner = textInputs[0] ? textInputs[0].value || '-' : '-';
 
+                    let extraDesc = "";
+                    if(el.classList.contains('cust-task')) {
+                        const insVal = document.getElementById(`ins-${el.dataset.id}`)?.value;
+                        const descVal = document.getElementById(`desc-${el.dataset.id}`)?.value;
+                        if(insVal || descVal) extraDesc = ` | Insert: ${insVal || '-'} | Desc: ${descVal || '-'}`;
+                    }
+
                     svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">• ${titleText}</text>
-                        <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}</text>
+                        <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}${extraDesc}</text>
                         <text x="800" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
                         <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
                     currentY += 45;
