@@ -7,19 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary-green: #42B891; --factorial-pink: #f06a6a; --bg-light: #FFFFFF; --text-dark: #1a1a1a; --border-muted: #e0e0e0; --module-bg: #f2faf7; }
-        
         *, *::before, *::after { box-sizing: border-box; }
-        
         body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
-        .utility-header { width: 100%; max-width: 1200px; padding: 25px 20px; display: flex; justify-content: space-between; align-items: center;}
-        .utility-text { color: var(--factorial-pink); font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .header { text-align: center; margin-bottom: 30px; padding: 0 20px; }
+        .header { text-align: center; margin: 30px 0; padding: 0 20px; }
         .header h1 { font-size: clamp(24px, 4vw, 42px); font-weight: 800; margin: 0; }
         .header h1 span.pink { color: var(--factorial-pink); }
-        
         .main-container { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 30px; width: 95%; max-width: 1400px; margin-bottom: 60px; align-items: start;}
         
-        /* SIDEBAR STYLES */
         .sidebar { display: flex; flex-direction: column; gap: 15px; width: 100%;}
         .formal-card { background: #FFFFFF; padding: 20px; border-radius: 12px; border: 1px solid var(--border-muted); width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
         .card-title { color: var(--text-dark); font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--border-muted); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
@@ -29,11 +23,12 @@
         .input-group input[type="text"], .input-group select, .input-group input[type="date"] { width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 13px; }
         
         .tier-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;}
-        .tier-mini { border: 1px solid var(--border-muted); border-radius: 8px; padding: 10px 5px; text-align: center; cursor: pointer; transition: 0.2s; background: #fafafa;}
+        .tier-mini { border: 1px solid var(--border-muted); border-radius: 8px; padding: 10px 5px; text-align: center; cursor: pointer; transition: 0.2s; background: #fafafa; position: relative;}
         .tier-mini:hover { border-color: var(--primary-green); }
         .tier-mini.active { border-color: var(--primary-green); background: var(--module-bg); color: var(--primary-green);}
         .tier-mini div { font-size: 12px; font-weight: 800; color: inherit;}
         .tier-mini span { font-size: 10px; opacity: 0.7; color: var(--text-dark); }
+        .tier-mini.popular::before { content: 'POPULAR'; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: var(--factorial-pink); color: white; font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
 
         .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;}
         .os-input { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; padding: 8px; border-radius: 6px; border: 1px solid var(--border-muted);}
@@ -50,7 +45,6 @@
         .checkbox-row:hover { background: #f0f0f0; }
         .checkbox-row.active { background: #fff8f8; border-color: var(--factorial-pink); }
         .checkbox-row.green-style.active { background: var(--module-bg); border-color: var(--primary-green); }
-        
         .checkbox-row input { width: 18px; height: 18px; pointer-events:none; flex-shrink: 0; margin-top: 0;}
         .checkbox-row.active input { accent-color: var(--factorial-pink); }
         .checkbox-row.green-style.active input { accent-color: var(--primary-green); }
@@ -59,9 +53,8 @@
         .btn-outline { width: 100%; padding: 10px; border: 1px dashed var(--text-dark); background: transparent; color: var(--text-dark); font-weight: 700; font-family: 'DM Sans'; border-radius: 6px; cursor: pointer; transition: 0.2s;}
         .btn-outline:hover { background: var(--text-dark); color: white;}
 
-        /* TIMELINE STYLES */
         .timeline-area { display: flex; flex-direction: column; gap: 30px; width: 100%; min-width: 0;}
-        .phase-section { background-color: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); width: 100%; overflow: hidden;}
+        .phase-section { background-color: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid var(--border-muted); width: 100%; overflow: hidden; display: none;}
         .phase-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; border-bottom: 3px solid var(--text-dark); padding-bottom: 10px; color: var(--text-dark);}
         
         .task-item { background: white; border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; margin-bottom: 15px; width: 100%; display: none; }
@@ -71,13 +64,11 @@
         .task-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; align-items: end; }
         .span-2 { grid-column: span 2; }
         
-        /* OS Columns */
-        .os-columns-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; margin-bottom: 20px; display: none;}
-        .os-column { background: white; border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; min-width: 0; display: none;}
+        .os-columns-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; margin-bottom: 20px; display: flex; flex-wrap: wrap;}
+        .os-column { background: white; border: 1px solid var(--border-muted); border-radius: 8px; padding: 15px; flex: 1; min-width: 260px; display: none;}
         .os-col-title { font-size: 14px; font-weight: 800; color: var(--primary-green); margin-bottom: 15px; border-bottom: 2px solid var(--module-bg); padding-bottom: 8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;}
         .os-task-item { border: 1px dashed var(--border-muted); border-radius: 6px; padding: 12px; margin-bottom: 15px; background: #fafafa; display: none;}
         .os-task-header { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4; display: flex; justify-content: space-between; gap: 10px;}
-        
         .os-task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .os-task-grid .input-group { margin-bottom: 0; }
         .os-task-grid input { padding: 6px; font-size: 12px; width: 100%; min-width: 0; box-sizing: border-box;}
@@ -89,14 +80,8 @@
         .action-btn { background-color: var(--text-dark); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .action-btn:hover { transform: scale(1.1); background-color: var(--factorial-pink); }
 
-        @media (max-width: 1024px) {
-            .main-container { grid-template-columns: 1fr; }
-            .sidebar { max-width: 700px; margin: 0 auto; }
-        }
-        @media (max-width: 600px) {
-            .task-grid { grid-template-columns: 1fr 1fr; }
-            .task-grid .span-2 { grid-column: span 2; }
-        }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } .sidebar { max-width: 700px; margin: 0 auto; } }
+        @media (max-width: 600px) { .task-grid { grid-template-columns: 1fr 1fr; } .task-grid .span-2 { grid-column: span 2; } }
     </style>
 </head>
 <body>
@@ -114,13 +99,13 @@
                 <div class="input-group" style="margin-bottom: 10px;"><label>Nome Cliente</label><input type="text" id="client-name" placeholder="Es. Acme Corp"></div>
                 <div class="tier-grid">
                     <div class="tier-mini active" onclick="selectTier(25)" id="tier-25"><div>Starter</div><span>25 Devices</span></div>
-                    <div class="tier-mini" onclick="selectTier(50)" id="tier-50"><div>Growth</div><span>50 Devices</span></div>
+                    <div class="tier-mini popular" onclick="selectTier(50)" id="tier-50"><div>Growth</div><span>50 Devices</span></div>
                     <div class="tier-mini" onclick="selectTier(100)" id="tier-100"><div>Enterprise</div><span>100 Devices</span></div>
                 </div>
             </div>
 
             <div class="formal-card" style="border-left: 4px solid #f06a6a;">
-                <div class="card-title">1. Platform Onboarding</div>
+                <div class="card-title" style="color: #f06a6a;">1. Platform Onboarding</div>
                 <div class="input-group">
                     <label>HR Integration</label>
                     <select id="hr-system" onchange="updateUI()">
@@ -182,19 +167,19 @@
             </div>
 
             <div class="formal-card" style="border-left: 4px solid #42B891;">
-                <div class="card-title">2. MDM - For which OS</div>
+                <div class="card-title" style="color: #42B891;">2. MDM - For which OS</div>
                 <div class="error-msg" id="inventory-err">Limite dispositivi superato per il piano selezionato!</div>
                 <div class="os-grid">
                     <div class="os-input"><label><svg viewBox="0 0 384 512" width="12" height="12"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Mac</label><input type="number" id="os-apple" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> Win</label><input type="number" id="os-win" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 512 512" width="12" height="12"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> Android</label><input type="number" id="os-and" value="0" min="0" onchange="updateUI()"></div>
-                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Linux</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
+                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Lin</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
                 </div>
 
-                <div style="font-size: 11px; font-weight: 700; margin: 15px 0 10px 0; text-transform: uppercase;">Install Locally</div>
-                <div class="input-group" style="margin-bottom: 10px;">
-                    <input type="text" id="mdm-search" class="search-bar" placeholder="Cerca package software..." oninput="filterMDMList()">
-                    <div class="scroll-list-container" id="mdm-list"></div>
+                <div style="font-size: 11px; font-weight: 700; margin: 15px 0 10px 0; text-transform: uppercase; color: #666;">Local Deployments</div>
+                <div class="input-group">
+                    <input type="text" id="mdm-search" class="search-bar" placeholder="Choose package software..." oninput="filterMDMList()">
+                    <div class="scroll-list-container" id="mdm-list" style="max-height: 140px;"></div>
                 </div>
                 
                 <div class="checkbox-row green-style" id="cb-play" style="display:none;" onclick="toggleCheckbox('mdm-store-android', 'cb-play')">
@@ -209,8 +194,9 @@
             </div>
 
             <div class="formal-card" style="border-left: 4px solid #6C5CE7;">
-                <div class="card-title">3. SaaS - Which IdP</div>
+                <div class="card-title" style="color: #6C5CE7;">3. SaaS & IdP</div>
                 <div class="input-group">
+                    <label>Which IdP</label>
                     <select id="idp-system" onchange="updateUI()">
                         <option value="none">Nessuno / Da Definire</option>
                         <option value="Microsoft Entra ID">Microsoft Entra ID (Azure AD)</option>
@@ -259,34 +245,34 @@
                         <option value="Zoom">Zoom</option>
                     </select>
                 </div>
-                <div class="checkbox-row" id="cb-saml" onclick="toggleCheckbox('custom-saml', 'cb-saml')" style="margin-bottom: 15px;">
-                    <input type="checkbox" id="custom-saml"><label>Custom SAML 2.0 Integration</label>
+                <div class="checkbox-row" id="cb-saml" onclick="toggleCheckbox('custom-saml', 'cb-saml')" style="border-color: #6C5CE7;">
+                    <input type="checkbox" id="custom-saml" style="accent-color: #6C5CE7;"><label>Custom SAML 2.0 Integration</label>
                 </div>
-                <div style="font-size: 11px; font-weight: 700; margin: 10px 0; text-transform: uppercase;">Select apps desired</div>
+                <div style="font-size: 11px; font-weight: 700; margin: 15px 0 10px 0; text-transform: uppercase; color: #666;">Select apps desired</div>
                 <div class="input-group" style="margin-bottom: 0;">
-                    <div class="scroll-list-container" id="saas-list"></div>
-                    <input type="text" id="saas-other" placeholder="Aggiungi SaaS e premi Invio..." onkeypress="addOtherSaaS(event)" style="padding: 8px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 12px;">
+                    <div class="scroll-list-container" id="saas-list" style="max-height: 140px;"></div>
+                    <input type="text" id="saas-other" placeholder="Aggiungi SaaS e premi Invio..." onkeypress="addOtherSaaS(event)" style="padding: 10px; border: 1px solid var(--border-muted); border-radius: 6px; font-family: 'DM Sans'; font-size: 13px;">
                 </div>
             </div>
 
             <div class="formal-card" style="border-left: 4px solid #F39C12;">
-                <div class="card-title">4. Check-in</div>
-                <button class="btn-outline" onclick="addCustomCriteria()">+ Align on Custom Criteria</button>
+                <div class="card-title" style="color: #F39C12;">4. Check-in & Criteria</div>
+                <button class="btn-outline" style="border-color: #F39C12; color: #F39C12;" onclick="addCustomCriteria()">+ Add Custom Success Criteria</button>
             </div>
 
         </div>
 
         <div class="timeline-area">
             
-            <div class="phase-section">
-                <div class="phase-title">Week 1: Platform Onboarding</div>
+            <div class="phase-section" id="section-w1" style="display: block;">
+                <div class="phase-title" style="color: #f06a6a; border-color:#f06a6a;">Week 1: Platform Onboarding</div>
                 
                 <div class="task-item" id="t-w1-kick" style="display: block;">
                     <div class="task-header"><span id="lbl-w1-kick">Day Zero - plan & kick off</span><span class="task-time">1h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-kick-start"></div>
-                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-kick"></div>
-                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-kick"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-kick" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-kick" placeholder=""></div>
                     </div>
                 </div>
 
@@ -294,8 +280,8 @@
                     <div class="task-header"><span id="lbl-w1-hr">HR Integration</span><span class="task-time">1h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-hr-start"></div>
-                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hr"></div>
-                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hr"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hr" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hr" placeholder=""></div>
                     </div>
                 </div>
 
@@ -304,16 +290,380 @@
                     <div class="task-grid">
                         <div class="input-group"><label>Start</label><input type="date" id="d-w1-hw-start"></div>
                         <div class="input-group"><label>End</label><input type="date" id="d-w1-hw-end"></div>
-                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hw"></div>
-                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hw"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hw" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hw" placeholder=""></div>
                     </div>
                 </div>
             </div>
 
             <div class="phase-section" id="section-w2">
-                <div class="phase-title">Week 2: MDM - For which OS</div>
-                
+                <div class="phase-title" style="color: #42B891; border-color:#42B891;">Week 2: MDM Config</div>
                 <div class="os-columns-wrapper" id="w2-os-grid">
                     
                     <div class="os-column" id="col-mac">
-                        <div class="os
+                        <div class="os-col-title" id="lbl-col-mac"><svg viewBox="0 0 384 512" width="14" height="14"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> MAC</div>
+                        <div class="os-task-item" id="t-w2-abm" style="display:block;">
+                            <div class="os-task-header"><span>Apple ABM & MDM Token Setup</span><span style="color:var(--factorial-pink); font-size:11px;">1.5h</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-abm-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-abm" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-abm" placeholder=""></div>
+                            </div>
+                        </div>
+                        <div class="os-task-item" id="t-w2-vpp" style="display:block;">
+                            <div class="os-task-header"><span>Apple VPP Setup</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-vpp-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-vpp" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-vpp" placeholder=""></div>
+                            </div>
+                        </div>
+                        <div class="os-task-item" id="t-w2-appstore">
+                            <div class="os-task-header"><span>App Store Deployment</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-appstore-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-appstore" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-appstore" placeholder=""></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="os-column" id="col-win">
+                        <div class="os-col-title" id="lbl-col-win"><svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> WINDOWS</div>
+                        <div class="os-task-item" id="t-w2-win1" style="display:block;">
+                            <div class="os-task-header"><span>Verifica Licenze EMS E3/E5</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-win1-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-win1" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-win1" placeholder=""></div>
+                            </div>
+                        </div>
+                        <div class="os-task-item" id="t-w2-win2" style="display:block;">
+                            <div class="os-task-header"><span>Entra ID & Autopilot MDM</span><span style="color:var(--factorial-pink); font-size:11px;">2h</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-win2-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-win2" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-win2" placeholder=""></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="os-column" id="col-and">
+                        <div class="os-col-title" id="lbl-col-and"><svg viewBox="0 0 512 512" width="14" height="14"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> ANDROID</div>
+                        <div class="os-task-item" id="t-w2-and" style="display:block;">
+                            <div class="os-task-header"><span>Android Enterprise (Zero-Touch)</span><span style="color:var(--factorial-pink); font-size:11px;">1.5h</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-and-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-and" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-and" placeholder=""></div>
+                            </div>
+                        </div>
+                        <div class="os-task-item" id="t-w2-gplay">
+                            <div class="os-task-header"><span>Google Play Deployment</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-gplay-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-gplay" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-gplay" placeholder=""></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="os-column" id="col-lin">
+                        <div class="os-col-title" id="lbl-col-lin"><svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> LINUX</div>
+                        <div class="os-task-item" id="t-w2-lin" style="display:block;">
+                            <div class="os-task-header"><span>Deploy Script Sicurezza Linux</span><span style="color:var(--factorial-pink); font-size:11px;">1h</span></div>
+                            <div class="os-task-grid">
+                                <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-lin-start"></div>
+                                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-lin" placeholder=""></div>
+                                <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-lin" placeholder=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-item" id="t-w2-inbuilt">
+                    <div class="task-header"><span id="lbl-w2-inbuilt">Install Locally (Inbuilt Packages)</span><span class="task-time">1.5h</span></div>
+                    <div class="task-grid">
+                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-inbuilt-start"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-inbuilt" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-inbuilt" placeholder=""></div>
+                    </div>
+                </div>
+
+                <div class="task-item" id="t-w2-custom">
+                    <div class="task-header"><span id="lbl-w2-custom">Deploy Custom Package</span><span class="task-time">2h</span></div>
+                    <div class="task-grid">
+                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-custom-start"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-custom" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-custom" placeholder=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-section" id="section-w3">
+                <div class="phase-title" style="color: #6C5CE7; border-color:#6C5CE7;">Week 3: SaaS & Identity</div>
+                
+                <div class="task-item" id="t-w3-idp">
+                    <div class="task-header"><span id="lbl-w3-idp">IdP Setup</span><span class="task-time">2h</span></div>
+                    <div class="task-grid">
+                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w3-idp-start"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w3-idp" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w3-idp" placeholder=""></div>
+                    </div>
+                </div>
+
+                <div class="task-item" id="t-w3-saml">
+                    <div class="task-header"><span id="lbl-w3-saml">Custom SAML 2.0</span><span class="task-time">2g</span></div>
+                    <div class="task-grid">
+                        <div class="input-group"><label>Start</label><input type="date" id="d-w3-saml-start"></div>
+                        <div class="input-group"><label>End</label><input type="date" id="d-w3-saml-end"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w3-saml" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w3-saml" placeholder=""></div>
+                    </div>
+                </div>
+
+                <div class="task-item" id="t-w3-saas">
+                    <div class="task-header"><span id="lbl-w3-saas">SaaS Apps Provisioning</span><span class="task-time">1.5h</span></div>
+                    <div class="task-grid">
+                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w3-saas-start"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w3-saas" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w3-saas" placeholder=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-section" id="section-w4" style="display: block;">
+                <div class="phase-title" style="color: #F39C12; border-color:#F39C12;">Week 4: Check-in</div>
+                
+                <div class="task-item" id="t-w4-chk" style="display: block;">
+                    <div class="task-header"><span id="lbl-w4-chk">Check in - state of things meeting</span><span class="task-time">1h</span></div>
+                    <div class="task-grid">
+                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w4-chk-start"></div>
+                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w4-chk" placeholder=""></div>
+                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w4-chk" placeholder=""></div>
+                    </div>
+                </div>
+
+                <div id="custom-criteria-container"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="action-btns-container">
+        <button class="action-btn" onclick="exportSVG()" title="Export Project Plan (SVG)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </button>
+    </div>
+
+<script>
+    let maxDevices = 25;
+    
+    let saasApps = ["1Password", "Adobe", "Aircall", "Airtable", "Amplitude", "Asana", "Atlassian", "AWS", "Bitwarden", "Box", "Brevo", "Cloudflare", "Dashlane", "Datadog", "Docusign", "Dropbox", "Figma", "Freshdesk", "Front", "Github", "Gitlab", "Harmony SASE", "Intercom", "Jetbrains", "Jira Cloud", "Klaviyo", "Lastpass", "Linear", "Make", "Metabase", "Monday", "N8N", "Okta", "Pipedrive", "Salesforce", "Sendgrid", "Slack", "Tableau", "Teamtailor", "Zapier", "Zendesk", "Zoom"];
+    let selectedSaaS = [];
+    
+    const rawMDMApps = "010 Editor, 1Password, 7-zip, 8x8 Work, Abstract, Adobe Acrobat Pro DC, Adobe Acrobat Reader, Adobe Creative Cloud, Adobe Digital Editions, Adobe DNG Converter, Aircall, Airtame, Amazon Chime, Amazon DCV, Android Studio, Anka, AnyDesk, Apparency, AppCleaner, Arc, Archaeology, Asana, Audacity, Authy, Avast Secure Browser, AWS Client VPN, balenaEtcher, BBEdit, BetterDisplay, Beyond Compare, Bitwarden, Blender, Box, Box Drive, Brave, Bruno, calibre, CamScanner, Camtasia, Canva, ChatGPT, ChatGPT Atlas, ChatGPT Desktop, Cisco Jabber, Citrix Workspace, Claude, Claude by Anthropic, CleanMyMac, CleanShot X, ClickUp, CLion, Clockify Desktop, Cloudflare WARP, Company Portal, Connect Fonts, CotEditor, CrashPlan, Cursor, Cyberduck, Dash, DataGrip, DB Browser for SQLite, DBeaver, DBeaverEE, DBeaverLite, DBeaverUltimate, DeepL, Dialpad, Discord, DisplayLink USB Graphics Software, Docker Desktop, draw.io, Dropbox, Eclipse IDE, Egnyte, Elgato Control Center, Elgato Stream Deck, Evernote, ExpressVPN, Figma, FileMaker Pro, Fork, Front, Ghostty, GIMP, GitHub, GitHub Desktop, GitKraken, Gmail, GoLand, Google Authenticator, Google Calendar, Google Chat, Google Chrome, Google Docs, Google Drive, Google Gemini, Google Lens, Google Maps, Google Meet, Google Sheets, Google Slides, Google Tasks, Google Translate, GPG Suite, Grammarly Desktop, Granola, HubSpot, Hyper, iMazing Profile Editor, Inkscape, Insomnia, IntelliJ IDEA CE, IntelliJ IDEA Ultimate, iTerm2, Jabra Direct, JetBrains Toolbox, Jira, KeePassXC, Keeper Password Manager, Keka, LastPass, LastPass Password Manager, Lens, LibreOffice, Linear, Little Snitch, Logi Options+, Loom, LuLu, Maccy, Mattermost, Messenger, Microsoft Authenticator, Microsoft Auto Update, Microsoft Edge, Microsoft Excel, Microsoft OneDrive, Microsoft OneNote, Microsoft Outlook, Microsoft PowerPoint, Microsoft Teams, Microsoft Visual Studio Code, Microsoft Word, Miro, MongoDB Compass, Mozilla Firefox, MySQL Workbench, Nextcloud, NordPass, NordVPN, Notepad++, Notion, Notion Calendar, Nova, Nudge, OBS, Obsidian, Okta Verify, OmniGraffle, Omnissa Horizon Client, OneDrive, Opera, OrbStack, P4V, Parallels Desktop, Perplexity AI, pgAdmin4, PhpStorm, Podman Desktop, Postman, Pritunl, Privileges, Proton Mail, Proton VPN, ProtonVPN, Proxifier, PuTTY, PyCharm Community Edition, PyCharm Professional, Qonto, Quip, Rancher Desktop, RapidAPI, Raycast, Rectangle, Rider, Royal TSX, RubyMine, RustRover, Salesforce, Santa, Shottr, Signal, Sketch, Slack, Snagit, Sonos, SourceTree, Sourcetree, Splashtop Business, Splashtop Streamer, Spotify, Stats, Steam, Sublime Merge, Sublime Text, Surfshark, Suspicious Package, Tableau Desktop, TablePlus, Tailscale, TeamViewer, Telegram, Teleport Connect, Teleport Suite, TextExpander, Thunderbird, Todoist, Tower, Transmit, Trello, Tunnelblick, Twingate, UTM, VirtualBox, Viscosity, VLC media player, VNC Viewer, Wacom Tablet, Webex, WebStorm, WhatsApp, WhatsApp Business, Windows App, Windsurf, Wireshark, Wrike, Yubico Authenticator, Yubikey Manager, Zed, Zeplin, Zoom, Zoom Cloud Meetings";
+    let mdmApps = rawMDMApps.split(', ').sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    let selectedMDMApps = [];
+    let customCriteriaId = 0;
+
+    function init() { 
+        renderSaaSList(); renderMDMList(); updateUI(); 
+    }
+
+    function toggleCheckbox(id, boxId) { 
+        const cb = document.getElementById(id);
+        cb.checked = !cb.checked;
+        if(boxId) {
+            const box = document.getElementById(boxId);
+            if(cb.checked) box.classList.add('active');
+            else box.classList.remove('active');
+        }
+        updateUI(); 
+    }
+    
+    function selectTier(devices) { 
+        maxDevices = devices; 
+        document.querySelectorAll('.tier-mini').forEach(c => c.classList.remove('active')); 
+        document.getElementById(`tier-${devices}`).classList.add('active'); 
+        updateUI(); 
+    }
+
+    function renderSaaSList() {
+        const container = document.getElementById('saas-list'); container.innerHTML = '';
+        saasApps.forEach(app => { container.innerHTML += `<div class="list-item"><input type="checkbox" id="saas-${app.replace(/\s/g,'')}" value="${app}" ${selectedSaaS.includes(app) ? 'checked' : ''} onchange="handleSaaSChange(this)"><label for="saas-${app.replace(/\s/g,'')}">${app}</label></div>`; });
+    }
+    function handleSaaSChange(cb) { if (cb.checked && !selectedSaaS.includes(cb.value)) selectedSaaS.push(cb.value); else if (!cb.checked) selectedSaaS = selectedSaaS.filter(a => a !== cb.value); updateUI(); }
+    function addOtherSaaS(e) { if (e.key === 'Enter') { e.preventDefault(); const val = e.target.value.trim(); if (val && !saasApps.includes(val)) { saasApps.push(val); selectedSaaS.push(val); e.target.value = ''; renderSaaSList(); updateUI(); document.getElementById('saas-list').scrollTop = document.getElementById('saas-list').scrollHeight; } } }
+
+    function renderMDMList(filter = '') {
+        const container = document.getElementById('mdm-list'); container.innerHTML = '';
+        mdmApps.filter(app => app.toLowerCase().includes(filter.toLowerCase())).forEach(app => { container.innerHTML += `<div class="list-item"><input type="checkbox" id="mdm-${app.replace(/[^a-zA-Z0-9]/g,'')}" value="${app}" ${selectedMDMApps.includes(app) ? 'checked' : ''} onchange="handleMDMChange(this)"><label for="mdm-${app.replace(/[^a-zA-Z0-9]/g,'')}">${app}</label></div>`; });
+    }
+    function filterMDMList() { renderMDMList(document.getElementById('mdm-search').value); }
+    function handleMDMChange(cb) { if (cb.checked && !selectedMDMApps.includes(cb.value)) selectedMDMApps.push(cb.value); else if (!cb.checked) selectedMDMApps = selectedMDMApps.filter(a => a !== cb.value); updateUI(); }
+
+    function addCustomCriteria() {
+        customCriteriaId++;
+        const id = `t-w4-cust-${customCriteriaId}`;
+        const html = `
+        <div class="task-item cust-task" id="${id}" data-id="${id}" style="display:block;">
+            <div class="task-header"><input type="text" value="Custom success criteria" style="border:none; border-bottom:1px dashed #ccc; font-weight:700; width:100%; color:var(--text-dark); font-family:'DM Sans'; font-size:14px; padding-bottom:5px;" id="lbl-${id}"></div>
+            <div class="task-grid">
+                <div class="input-group span-2"><label>Date</label><input type="date" id="d-${id}-start"></div>
+                <div class="input-group"><label>Owner</label><input type="text" value="" id="o-${id}" placeholder=""></div>
+                <div class="input-group"><label>Support</label><input type="text" value="" id="s-${id}" placeholder=""></div>
+            </div>
+        </div>`;
+        document.getElementById('custom-criteria-container').insertAdjacentHTML('beforeend', html);
+    }
+
+    // CORE: TOGGLING VISIBILITY WITHOUT LOSING DATA
+    function updateUI() {
+        const apple = parseInt(document.getElementById('os-apple').value) || 0;
+        const win = parseInt(document.getElementById('os-win').value) || 0;
+        const lin = parseInt(document.getElementById('os-lin').value) || 0;
+        const and = parseInt(document.getElementById('os-and').value) || 0;
+        const total = apple + win + lin + and;
+
+        document.getElementById('inventory-err').style.display = total > maxDevices ? 'block' : 'none';
+
+        // Dynamic Stores based on OS
+        document.getElementById('cb-appstore').style.display = apple > 0 ? 'flex' : 'none';
+        document.getElementById('cb-play').style.display = and > 0 ? 'flex' : 'none';
+
+        // Values
+        const hris = document.getElementById('hr-system');
+        const hrisVal = hris.value;
+        const hrisText = hris.options[hris.selectedIndex].text;
+        const hwChecked = document.getElementById('hw-catalogue').checked;
+        const storeApp = document.getElementById('mdm-store-apple').checked && apple > 0;
+        const storeAnd = document.getElementById('mdm-store-android').checked && and > 0;
+        const customMdm = document.getElementById('mdm-custom').checked;
+        const idp = document.getElementById('idp-system');
+        const idpVal = idp.value;
+        const idpText = idp.options[idp.selectedIndex].text;
+        const samlChecked = document.getElementById('custom-saml').checked;
+
+        // WEEK 1
+        document.getElementById('t-w1-hr').style.display = hrisVal !== 'none' ? 'block' : 'none';
+        document.getElementById('lbl-w1-hr').innerText = hrisText === 'Factorial' ? "Onboarding Factorial IT: HR integration & initial Set-up" : `HR Integration (${hrisText})`;
+        document.getElementById('t-w1-hw').style.display = hwChecked ? 'block' : 'none';
+
+        // WEEK 2
+        document.getElementById('section-w2').style.display = (apple > 0 || win > 0 || lin > 0 || and > 0 || selectedMDMApps.length > 0 || customMdm) ? 'block' : 'none';
+        
+        document.getElementById('col-mac').style.display = apple > 0 ? 'block' : 'none';
+        document.getElementById('lbl-col-mac').innerHTML = `<svg viewBox="0 0 384 512" width="14" height="14"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> MAC (${apple} Device)`;
+        document.getElementById('t-w2-appstore').style.display = storeApp ? 'block' : 'none';
+
+        document.getElementById('col-win').style.display = win > 0 ? 'block' : 'none';
+        document.getElementById('lbl-col-win').innerHTML = `<svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> WINDOWS (${win} Device)`;
+
+        document.getElementById('col-and').style.display = and > 0 ? 'block' : 'none';
+        document.getElementById('lbl-col-and').innerHTML = `<svg viewBox="0 0 512 512" width="14" height="14"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> ANDROID (${and} Device)`;
+        document.getElementById('t-w2-gplay').style.display = storeAnd ? 'block' : 'none';
+
+        document.getElementById('col-lin').style.display = lin > 0 ? 'block' : 'none';
+        document.getElementById('lbl-col-lin').innerHTML = `<svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> LINUX (${lin} Device)`;
+
+        document.getElementById('w2-os-grid').style.display = (apple > 0 || win > 0 || lin > 0 || and > 0) ? 'grid' : 'none';
+
+        document.getElementById('t-w2-inbuilt').style.display = selectedMDMApps.length > 0 ? 'block' : 'none';
+        document.getElementById('lbl-w2-inbuilt').innerText = `Install Locally (${selectedMDMApps.length} Inbuilt Pkgs: ${selectedMDMApps.slice(0,2).join(', ')}${selectedMDMApps.length>2?'...':''})`;
+        
+        document.getElementById('t-w2-custom').style.display = customMdm ? 'block' : 'none';
+
+        // WEEK 3
+        document.getElementById('section-w3').style.display = (idpVal !== 'none' || samlChecked || selectedSaaS.length > 0) ? 'block' : 'none';
+        
+        document.getElementById('t-w3-idp').style.display = idpVal !== 'none' ? 'block' : 'none';
+        document.getElementById('lbl-w3-idp').innerText = `IdP Setup (${idpText})`;
+        
+        document.getElementById('t-w3-saml').style.display = samlChecked ? 'block' : 'none';
+
+        document.getElementById('t-w3-saas').style.display = selectedSaaS.length > 0 ? 'block' : 'none';
+        document.getElementById('lbl-w3-saas').innerText = `SaaS Provisioning (${selectedSaaS.length} Apps: ${selectedSaaS.slice(0,3).join(', ')}${selectedSaaS.length>3?'...':''})`;
+    }
+
+    // SVG EXPORT ENGINE
+    function exportSVG() {
+        const clientName = document.getElementById('client-name').value || 'Acme_Corp';
+        const dark = "#1a1a1a", grey = "#e0e0e0";
+        let svgContent = '';
+        let currentY = 180;
+        
+        const colors = {1: '#f06a6a', 2: '#42B891', 3: '#6C5CE7', 4: '#F39C12'};
+        const titles = {1: 'WEEK 1: PLATFORM ONBOARDING', 2: 'WEEK 2: MDM FOR WHICH OS', 3: 'WEEK 3: SAAS & IDP', 4: 'WEEK 4: CHECK-IN & CRITERIA'};
+
+        // Funzione helper per stampare un blocco di task
+        const printTasks = (domElements, isW2Col = false) => {
+            domElements.forEach((el, i) => {
+                if(el.style.display !== 'none') {
+                    // Prendi i dati
+                    let tLabel = el.querySelector('.task-header span') || el.querySelector('.os-task-header span') || el.querySelector('.task-header input');
+                    let titleText = tLabel.tagName === 'INPUT' ? tLabel.value : tLabel.innerText;
+                    
+                    if(isW2Col) titleText = "[OS MDM] " + titleText;
+
+                    const inputs = el.querySelectorAll('input[type="date"]');
+                    const startVal = inputs[0] ? inputs[0].value || 'TBD' : 'TBD';
+                    const endVal = inputs[1] ? inputs[1].value || 'TBD' : 'TBD';
+                    const dateText = inputs.length > 1 ? `Start: ${startVal} | End: ${endVal}` : `Date: ${startVal}`;
+                    
+                    const textInputs = el.querySelectorAll('input[type="text"]:not([id^="lbl"])');
+                    const owner = textInputs[0] ? textInputs[0].value || '-' : '-';
+
+                    svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">• ${titleText}</text>
+                        <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}</text>
+                        <text x="800" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
+                        <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
+                    currentY += 45;
+                }
+            });
+        };
+
+        // Week 1
+        svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[1]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[1]}</text>`;
+        currentY += 60;
+        printTasks(document.querySelectorAll('#section-w1 .task-item'));
+        currentY += 20;
+
+        // Week 2
+        if(document.getElementById('section-w2').style.display !== 'none') {
+            svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[2]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[2]}</text>`;
+            currentY += 60;
+            printTasks(document.querySelectorAll('#w2-os-grid .os-column .os-task-item'), true);
+            printTasks(document.querySelectorAll('#section-w2 > .task-item'));
+            currentY += 20;
+        }
+
+        // Week 3
+        if(document.getElementById('section-w3').style.display !== 'none') {
+            svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[3]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[3]}</text>`;
+            currentY += 60;
+            printTasks(document.querySelectorAll('#section-w3 .task-item'));
+            currentY += 20;
+        }
+
+        // Week 4
+        svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[4]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[4]}</text>`;
+        currentY += 60;
+        printTasks(document.querySelectorAll('#t-w4-chk'));
+        printTasks(document.querySelectorAll('.cust-task'));
+
+        const totalHeight = currentY + 50;
+
+        const svg = `<svg width="1000" height="${totalHeight}" viewBox="0 0 1000 ${totalHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1000" height="${totalHeight}" fill="white"/>
+            <text x="50" y="50" fill="#f06a6a" font-family="DM Sans" font-size="22" font-weight="800">FACTORIAL IT / 4-WEEK PROJECT PLAN</text>
+            <text x="50" y="80" fill="${dark}" font-family="DM Sans" font-size="14">Cliente: ${clientName} | Configurato il: ${new Date().toLocaleDateString()}</text>
+            ${svgContent}
+        </svg>`;
+        const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([svg], { type: 'text/plain' })); link.download = `Plan_${clientName}.svg`; link.click();
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
