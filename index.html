@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factorial IT - 4-Week Project Plan</title>
+    <title>Factorial IT - Road to Success</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary-green: #42B891; --factorial-pink: #f06a6a; --bg-light: #FFFFFF; --text-dark: #1a1a1a; --border-muted: #e0e0e0; --module-bg: #f2faf7; }
-        
         *, *::before, *::after { box-sizing: border-box; }
-        
         body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
         .utility-header { width: 100%; max-width: 1200px; padding: 25px 20px; display: flex; justify-content: space-between; align-items: center;}
         .utility-text { color: var(--factorial-pink); font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .header { text-align: center; margin-bottom: 30px; padding: 0 20px; }
+        .header { text-align: center; margin: 30px 0; padding: 0 20px; }
         .header h1 { font-size: clamp(24px, 4vw, 42px); font-weight: 800; margin: 0; }
         .header h1 span.pink { color: var(--factorial-pink); }
-        
         .main-container { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 30px; width: 95%; max-width: 1400px; margin-bottom: 60px; align-items: start;}
         
         /* SIDEBAR STYLES */
@@ -78,7 +75,6 @@
         .os-col-title { font-size: 14px; font-weight: 800; color: var(--primary-green); margin-bottom: 15px; border-bottom: 2px solid var(--module-bg); padding-bottom: 8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;}
         .os-task-item { border: 1px dashed var(--border-muted); border-radius: 6px; padding: 12px; margin-bottom: 15px; background: #fafafa; display: none;}
         .os-task-header { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4; display: flex; justify-content: space-between; gap: 10px;}
-        
         .os-task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .os-task-grid .input-group { margin-bottom: 0; }
         .os-task-grid input { padding: 6px; font-size: 12px; width: 100%; min-width: 0; box-sizing: border-box;}
@@ -90,20 +86,15 @@
         .action-btn { background-color: var(--text-dark); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .action-btn:hover { transform: scale(1.1); background-color: var(--factorial-pink); }
 
-        @media (max-width: 1024px) {
-            .main-container { grid-template-columns: 1fr; }
-            .sidebar { max-width: 700px; margin: 0 auto; }
-        }
-        @media (max-width: 600px) {
-            .task-grid { grid-template-columns: 1fr 1fr; }
-            .task-grid .span-2 { grid-column: span 2; }
-        }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } .sidebar { max-width: 700px; margin: 0 auto; } }
+        @media (max-width: 600px) { .task-grid { grid-template-columns: 1fr 1fr; } .task-grid .span-2 { grid-column: span 2; } }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Dynamic <span class="pink">Project Plan</span> Setup</h1>
+        <div class="utility-text" style="margin-bottom: 10px;">Factorial IT Configurator</div>
+        <h1>Defining Your <span class="pink">Road to Success</span></h1>
     </div>
 
     <div class="main-container">
@@ -189,7 +180,7 @@
                     <div class="os-input"><label><svg viewBox="0 0 384 512" width="12" height="12"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Mac</label><input type="number" id="os-apple" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> Win</label><input type="number" id="os-win" value="0" min="0" onchange="updateUI()"></div>
                     <div class="os-input"><label><svg viewBox="0 0 512 512" width="12" height="12"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> Android</label><input type="number" id="os-and" value="0" min="0" onchange="updateUI()"></div>
-                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Linux</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
+                    <div class="os-input"><label><svg viewBox="0 0 448 512" width="12" height="12"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> Lin</label><input type="number" id="os-lin" value="0" min="0" onchange="updateUI()"></div>
                 </div>
 
                 <div style="font-size: 11px; font-weight: 700; margin: 15px 0 10px 0; text-transform: uppercase; color: #666;">Local Deployments</div>
@@ -283,7 +274,7 @@
             <div class="phase-section" id="section-w1" style="display: block;">
                 <div class="phase-title" style="color: #f06a6a; border-color:#f06a6a;">Week 1: Platform Onboarding</div>
                 
-                <div class="task-item" id="t-w1-kick" style="display: block;">
+                <div class="task-item" id="w1-kick" data-id="w1-kick" style="display: block;">
                     <div class="task-header"><span id="lbl-w1-kick">Day Zero - plan & kick off</span><span class="task-time">1h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-kick-start"></div>
@@ -292,7 +283,7 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w1-hr">
+                <div class="task-item" id="w1-hr" data-id="w1-hr">
                     <div class="task-header"><span id="lbl-w1-hr">HR Integration</span><span class="task-time">1h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w1-hr-start"></div>
@@ -301,13 +292,15 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w1-hw">
-                    <div class="task-header"><span id="lbl-w1-hw">Catalogue Purchase Setup</span><span class="task-time">3g</span></div>
+                <div class="task-item" id="w1-hw" data-id="w1-hw">
+                    <div class="task-header"><span id="lbl-w1-hw">Catalogue Purchase Setup</span><span class="task-time">3-5g</span></div>
                     <div class="task-grid">
                         <div class="input-group"><label>Start</label><input type="date" id="d-w1-hw-start"></div>
                         <div class="input-group"><label>End</label><input type="date" id="d-w1-hw-end"></div>
                         <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w1-hw" placeholder=""></div>
                         <div class="input-group"><label>Support</label><input type="text" value="" id="s-w1-hw" placeholder=""></div>
+                        <div class="input-group span-2"><label>Scope</label><input type="text" value="" id="scope-w1-hw" placeholder="Es. Laptops for Sales Team..."></div>
+                        <div class="input-group span-2"><label>Objective</label><input type="text" value="" id="obj-w1-hw" placeholder="Es. Zero-touch shipping in EU..."></div>
                     </div>
                 </div>
             </div>
@@ -318,7 +311,7 @@
                     
                     <div class="os-column" id="col-mac">
                         <div class="os-col-title" id="lbl-col-mac"><svg viewBox="0 0 384 512" width="14" height="14"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> MAC</div>
-                        <div class="os-task-item" id="t-w2-abm" style="display:block;">
+                        <div class="os-task-item" id="w2-abm" data-id="w2-abm" style="display:block;">
                             <div class="os-task-header"><span>Apple ABM & MDM Token Setup</span><span style="color:var(--factorial-pink); font-size:11px;">1.5h</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-abm-start"></div>
@@ -326,7 +319,7 @@
                                 <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-abm" placeholder=""></div>
                             </div>
                         </div>
-                        <div class="os-task-item" id="t-w2-vpp" style="display:block;">
+                        <div class="os-task-item" id="w2-vpp" data-id="w2-vpp" style="display:block;">
                             <div class="os-task-header"><span>Apple VPP Setup</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-vpp-start"></div>
@@ -334,7 +327,7 @@
                                 <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-vpp" placeholder=""></div>
                             </div>
                         </div>
-                        <div class="os-task-item" id="t-w2-appstore">
+                        <div class="os-task-item" id="w2-appstore" data-id="w2-appstore">
                             <div class="os-task-header"><span>App Store Deployment</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-appstore-start"></div>
@@ -346,7 +339,7 @@
 
                     <div class="os-column" id="col-win">
                         <div class="os-col-title" id="lbl-col-win"><svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> WINDOWS</div>
-                        <div class="os-task-item" id="t-w2-win1" style="display:block;">
+                        <div class="os-task-item" id="w2-win1" data-id="w2-win1" style="display:block;">
                             <div class="os-task-header"><span>Verifica Licenze EMS E3/E5</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-win1-start"></div>
@@ -354,7 +347,7 @@
                                 <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-win1" placeholder=""></div>
                             </div>
                         </div>
-                        <div class="os-task-item" id="t-w2-win2" style="display:block;">
+                        <div class="os-task-item" id="w2-win2" data-id="w2-win2" style="display:block;">
                             <div class="os-task-header"><span>Entra ID & Autopilot MDM</span><span style="color:var(--factorial-pink); font-size:11px;">2h</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-win2-start"></div>
@@ -366,7 +359,7 @@
 
                     <div class="os-column" id="col-and">
                         <div class="os-col-title" id="lbl-col-and"><svg viewBox="0 0 512 512" width="14" height="14"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> ANDROID</div>
-                        <div class="os-task-item" id="t-w2-and" style="display:block;">
+                        <div class="os-task-item" id="w2-and" data-id="w2-and" style="display:block;">
                             <div class="os-task-header"><span>Android Enterprise (Zero-Touch)</span><span style="color:var(--factorial-pink); font-size:11px;">1.5h</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-and-start"></div>
@@ -374,7 +367,7 @@
                                 <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-and" placeholder=""></div>
                             </div>
                         </div>
-                        <div class="os-task-item" id="t-w2-gplay">
+                        <div class="os-task-item" id="w2-gplay" data-id="w2-gplay">
                             <div class="os-task-header"><span>Google Play Deployment</span><span style="color:var(--factorial-pink); font-size:11px;">30m</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-gplay-start"></div>
@@ -386,7 +379,7 @@
 
                     <div class="os-column" id="col-lin">
                         <div class="os-col-title" id="lbl-col-lin"><svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> LINUX</div>
-                        <div class="os-task-item" id="t-w2-lin" style="display:block;">
+                        <div class="os-task-item" id="w2-lin" data-id="w2-lin" style="display:block;">
                             <div class="os-task-header"><span>Deploy Script Sicurezza Linux</span><span style="color:var(--factorial-pink); font-size:11px;">1h</span></div>
                             <div class="os-task-grid">
                                 <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-lin-start"></div>
@@ -397,7 +390,7 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w2-inbuilt">
+                <div class="task-item" id="w2-inbuilt" data-id="w2-inbuilt">
                     <div class="task-header"><span id="lbl-w2-inbuilt">Install Locally (Inbuilt Packages)</span><span class="task-time">1.5h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-inbuilt-start"></div>
@@ -406,12 +399,14 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w2-custom">
+                <div class="task-item" id="w2-custom" data-id="w2-custom">
                     <div class="task-header"><span id="lbl-w2-custom">Deploy Custom Package</span><span class="task-time">2h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w2-custom-start"></div>
                         <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w2-custom" placeholder=""></div>
                         <div class="input-group"><label>Support</label><input type="text" value="" id="s-w2-custom" placeholder=""></div>
+                        <div class="input-group span-2"><label>Nome Package</label><input type="text" value="" id="name-w2-custom" placeholder="Es. custom-app.msi"></div>
+                        <div class="input-group span-2"><label>Descrizione</label><input type="text" value="" id="desc-w2-custom" placeholder="Descrizione del software..."></div>
                     </div>
                 </div>
             </div>
@@ -419,7 +414,7 @@
             <div class="phase-section" id="section-w3">
                 <div class="phase-title" style="color: #6C5CE7; border-color:#6C5CE7;">Week 3: SaaS & Identity</div>
                 
-                <div class="task-item" id="t-w3-idp">
+                <div class="task-item" id="w3-idp" data-id="w3-idp">
                     <div class="task-header"><span id="lbl-w3-idp">IdP Setup</span><span class="task-time">2h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w3-idp-start"></div>
@@ -428,7 +423,7 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w3-saml">
+                <div class="task-item" id="w3-saml" data-id="w3-saml">
                     <div class="task-header"><span id="lbl-w3-saml">Custom SAML 2.0</span><span class="task-time">2g</span></div>
                     <div class="task-grid">
                         <div class="input-group"><label>Start</label><input type="date" id="d-w3-saml-start"></div>
@@ -438,20 +433,13 @@
                     </div>
                 </div>
 
-                <div class="task-item" id="t-w3-saas">
-                    <div class="task-header"><span id="lbl-w3-saas">SaaS Apps Provisioning</span><span class="task-time">1.5h</span></div>
-                    <div class="task-grid">
-                        <div class="input-group span-2"><label>Date</label><input type="date" id="d-w3-saas-start"></div>
-                        <div class="input-group"><label>Owner</label><input type="text" value="" id="o-w3-saas" placeholder=""></div>
-                        <div class="input-group"><label>Support</label><input type="text" value="" id="s-w3-saas" placeholder=""></div>
-                    </div>
-                </div>
+                <div id="dynamic-saas-container"></div>
             </div>
 
             <div class="phase-section" id="section-w4" style="display: block;">
                 <div class="phase-title" style="color: #F39C12; border-color:#F39C12;">Week 4: Check-in</div>
                 
-                <div class="task-item" id="t-w4-chk" style="display: block;">
+                <div class="task-item" id="w4-chk" data-id="w4-chk" style="display: block;">
                     <div class="task-header"><span id="lbl-w4-chk">Check in - state of things meeting</span><span class="task-time">1h</span></div>
                     <div class="task-grid">
                         <div class="input-group span-2"><label>Date</label><input type="date" id="d-w4-chk-start"></div>
@@ -526,9 +514,8 @@
         }
 
         customCriteriaId++;
-        const id = `t-w4-cust-${customCriteriaId}`;
+        const id = `w4-cust-${customCriteriaId}`;
         
-        // Nuova struttura con i campi Insert e Description
         const html = `
         <div class="task-item cust-task" id="${id}" data-id="${id}" style="display:block;">
             <div class="task-header"><input type="text" value="Custom success criteria" style="border:none; border-bottom:1px dashed #ccc; font-weight:700; width:100%; color:var(--text-dark); font-family:'DM Sans'; font-size:14px; padding-bottom:5px;" id="lbl-${id}"></div>
@@ -571,44 +558,65 @@
         const samlChecked = document.getElementById('custom-saml').checked;
 
         // WEEK 1
-        document.getElementById('t-w1-hr').style.display = hrisVal !== 'none' ? 'block' : 'none';
+        document.getElementById('w1-hr').style.display = hrisVal !== 'none' ? 'block' : 'none';
         document.getElementById('lbl-w1-hr').innerText = hrisText === 'Factorial' ? "Onboarding Factorial IT: HR integration & initial Set-up" : `HR Integration (${hrisText})`;
-        document.getElementById('t-w1-hw').style.display = hwChecked ? 'block' : 'none';
+        document.getElementById('w1-hw').style.display = hwChecked ? 'block' : 'none';
 
         // WEEK 2
         document.getElementById('section-w2').style.display = (apple > 0 || win > 0 || lin > 0 || and > 0 || selectedMDMApps.length > 0 || customMdm) ? 'block' : 'none';
         
         document.getElementById('col-mac').style.display = apple > 0 ? 'block' : 'none';
         document.getElementById('lbl-col-mac').innerHTML = `<svg viewBox="0 0 384 512" width="14" height="14"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> MAC (${apple} Device)`;
-        document.getElementById('t-w2-appstore').style.display = storeApp ? 'block' : 'none';
+        document.getElementById('w2-appstore').style.display = storeApp ? 'block' : 'none';
 
         document.getElementById('col-win').style.display = win > 0 ? 'block' : 'none';
         document.getElementById('lbl-col-win').innerHTML = `<svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M0 93.7l210.7-29.7v167.4H0V93.7zm0 324.6l210.7 29.7V281H0v137.3zm236.1-164.5V11.4L448 0v231.4H236.1zm0 268.8L448 512V281H236.1v241.5z"/></svg> WINDOWS (${win} Device)`;
 
         document.getElementById('col-and').style.display = and > 0 ? 'block' : 'none';
         document.getElementById('lbl-col-and').innerHTML = `<svg viewBox="0 0 512 512" width="14" height="14"><path fill="currentColor" d="M325.3 234.3c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm-138.6 0c-6.5 0-11.8-5.3-11.8-11.8s5.3-11.8 11.8-11.8 11.8 5.3 11.8 11.8-5.3 11.8-11.8 11.8zm184.8 55.4H139.6c0-62.8 51.1-113.8 113.8-113.8s113.8 51.1 113.8 113.8zM253.4 43.1c-99.3 0-179.9 80.6-179.9 179.9S154.1 402.9 253.4 402.9 433.3 322.3 433.3 223 352.7 43.1 253.4 43.1zM85.4 256.3c0-93.5 76.1-169.6 169.6-169.6 93.5 0 169.6 76.1 169.6 169.6 0 93.5-76.1 169.6-169.6 169.6-93.5 0-169.6-76.1-169.6-169.6z"/></svg> ANDROID (${and} Device)`;
-        document.getElementById('t-w2-gplay').style.display = storeAnd ? 'block' : 'none';
+        document.getElementById('w2-gplay').style.display = storeAnd ? 'block' : 'none';
 
         document.getElementById('col-lin').style.display = lin > 0 ? 'block' : 'none';
         document.getElementById('lbl-col-lin').innerHTML = `<svg viewBox="0 0 448 512" width="14" height="14"><path fill="currentColor" d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zM420 432.2c-1.9-5.2-5.4-15.3-31-32.3-5.5-3.6-4.5-9 1.4-11.3 27-10.4 46.5-27.9 44.4-44.5-3.5-27.5-62-23.7-62-23.7 20-30.8 14-61.9-34.7-65-3.8-.2-7.5-.4-11.3-.5-13.8-.5-15.6-3.7-18-26.6-4.8-46 22-55.7 32-61.2 16.2-8.9 4.3-25.2-20-19.1-18.5 4.6-28.7 18.2-39.7 26.2-7 5-11.4 3.8-14.8-1-5.1-7.1-10.8-21.6-13.6-32.3-6-22.9-13.9-46.7-41.4-46.7-25.2 0-33 22-38 46.2-2.7 13.1-9 28.5-15 36.3-4.6 6-10.6 6-17.7.9-11.1-8-21.3-21.6-39.8-26.2-24.3-6-36.3 10.2-20.1 19.1 10.1 5.5 36.8 15.3 32 61.2-2.3 22.9-4.2 26.1-18 26.6-3.8.1-7.5.3-11.3.5-48.7 3.1-54.7 34.2-34.7 65 0 0-58.5-3.7-62 23.7-2.1 16.6 17.4 34.1 44.4 44.5 5.9 2.3 6.9 7.7 1.4 11.3-25.7 17-29.2 27.2-31 32.3-5.3 14.8 9.9 46.3 64.9 46.3 33.3 0 46-24.4 46-24.4 17.9 7 36 10 52.8 10s34.9-3 52.8-10c0 0 12.7 24.4 46 24.4 55 0 70.2-31.5 64.9-46.3zm-271.4-234.3c19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2zm150.9 64.3c-19.4 0-35.2-14.4-35.2-32.1 0-17.8 15.8-32.2 35.2-32.2 19.4 0 35.2 14.4 35.2 32.2 0 17.7-15.8 32.1-35.2 32.1z"/></svg> LINUX (${lin} Device)`;
 
         document.getElementById('w2-os-grid').style.display = (apple > 0 || win > 0 || lin > 0 || and > 0) ? 'grid' : 'none';
 
-        document.getElementById('t-w2-inbuilt').style.display = selectedMDMApps.length > 0 ? 'block' : 'none';
+        document.getElementById('w2-inbuilt').style.display = selectedMDMApps.length > 0 ? 'block' : 'none';
         document.getElementById('lbl-w2-inbuilt').innerText = `Install Locally (${selectedMDMApps.length} Inbuilt Pkgs: ${selectedMDMApps.slice(0,2).join(', ')}${selectedMDMApps.length>2?'...':''})`;
         
-        document.getElementById('t-w2-custom').style.display = customMdm ? 'block' : 'none';
+        document.getElementById('w2-custom').style.display = customMdm ? 'block' : 'none';
 
         // WEEK 3
         document.getElementById('section-w3').style.display = (idpVal !== 'none' || samlChecked || selectedSaaS.length > 0) ? 'block' : 'none';
         
-        document.getElementById('t-w3-idp').style.display = idpVal !== 'none' ? 'block' : 'none';
+        document.getElementById('w3-idp').style.display = idpVal !== 'none' ? 'block' : 'none';
         document.getElementById('lbl-w3-idp').innerText = `IdP Setup (${idpText})`;
         
-        document.getElementById('t-w3-saml').style.display = samlChecked ? 'block' : 'none';
+        document.getElementById('w3-saml').style.display = samlChecked ? 'block' : 'none';
 
-        document.getElementById('t-w3-saas').style.display = selectedSaaS.length > 0 ? 'block' : 'none';
-        document.getElementById('lbl-w3-saas').innerText = `SaaS Provisioning (${selectedSaaS.length} Apps: ${selectedSaaS.slice(0,3).join(', ')}${selectedSaaS.length>3?'...':''})`;
+        // GESTIONE DINAMICA DELLE APP SAAS (Salva dati esistenti e ricrea)
+        const existingSaaSData = {};
+        document.querySelectorAll('.dynamic-saas-task').forEach(el => {
+            const id = el.dataset.id;
+            existingSaaSData[id] = { start: document.getElementById(`d-${id}-start`)?.value, owner: document.getElementById(`o-${id}`)?.value, support: document.getElementById(`s-${id}`)?.value };
+        });
+
+        const saasContainer = document.getElementById('dynamic-saas-container');
+        saasContainer.innerHTML = '';
+        selectedSaaS.forEach((app) => {
+            const safeId = `saas-dyn-${app.replace(/[^a-zA-Z0-9]/g,'')}`;
+            const data = existingSaaSData[safeId] || {};
+            const html = `
+            <div class="task-item dynamic-saas-task" id="${safeId}" data-id="${safeId}" style="display:block;">
+                <div class="task-header"><span id="lbl-${safeId}">Provisioning: ${app}</span><span class="task-time">1h</span></div>
+                <div class="task-grid">
+                    <div class="input-group span-2"><label>Date</label><input type="date" id="d-${safeId}-start" value="${data.start || ''}"></div>
+                    <div class="input-group"><label>Owner</label><input type="text" id="o-${safeId}" value="${data.owner || ''}" placeholder=""></div>
+                    <div class="input-group"><label>Support</label><input type="text" id="s-${safeId}" value="${data.support || ''}" placeholder=""></div>
+                </div>
+            </div>`;
+            saasContainer.insertAdjacentHTML('beforeend', html);
+        });
     }
 
     function exportSVG() {
@@ -640,12 +648,20 @@
                     if(el.classList.contains('cust-task')) {
                         const insVal = document.getElementById(`ins-${el.dataset.id}`)?.value;
                         const descVal = document.getElementById(`desc-${el.dataset.id}`)?.value;
-                        if(insVal || descVal) extraDesc = ` | Insert: ${insVal || '-'} | Desc: ${descVal || '-'}`;
+                        if(insVal || descVal) extraDesc = ` | KPI: ${insVal || '-'} | Desc: ${descVal || '-'}`;
+                    } else if (el.dataset.id === 'w1-hw') {
+                        const scopeVal = document.getElementById(`scope-w1-hw`)?.value;
+                        const objVal = document.getElementById(`obj-w1-hw`)?.value;
+                        if(scopeVal || objVal) extraDesc = ` | Scope: ${scopeVal || '-'} | Obj: ${objVal || '-'}`;
+                    } else if (el.dataset.id === 'w2-custom') {
+                        const nameVal = document.getElementById(`name-w2-custom`)?.value;
+                        const descVal = document.getElementById(`desc-w2-custom`)?.value;
+                        if(nameVal || descVal) extraDesc = ` | Package: ${nameVal || '-'} | Desc: ${descVal || '-'}`;
                     }
 
                     svgContent += `<text x="50" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12" font-weight="700">• ${titleText}</text>
-                        <text x="550" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}${extraDesc}</text>
-                        <text x="800" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
+                        <text x="450" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">${dateText}${extraDesc}</text>
+                        <text x="850" y="${currentY}" fill="${dark}" font-family="DM Sans" font-size="12">Owner: ${owner}</text>
                         <line x1="50" y1="${currentY + 10}" x2="950" y2="${currentY + 10}" stroke="${grey}" stroke-dasharray="2 2"/>`;
                     currentY += 45;
                 }
@@ -671,14 +687,15 @@
         if(document.getElementById('section-w3').style.display !== 'none') {
             svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[3]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[3]}</text>`;
             currentY += 60;
-            printTasks(document.querySelectorAll('#section-w3 .task-item'));
+            printTasks(document.querySelectorAll('#section-w3 .task-item:not(.dynamic-saas-task)'));
+            printTasks(document.querySelectorAll('.dynamic-saas-task'));
             currentY += 20;
         }
 
         // Week 4
         svgContent += `<rect x="50" y="${currentY}" width="900" height="30" fill="${colors[4]}" rx="5"/><text x="65" y="${currentY + 20}" fill="white" font-family="DM Sans" font-size="14" font-weight="800">${titles[4]}</text>`;
         currentY += 60;
-        printTasks(document.querySelectorAll('#t-w4-chk'));
+        printTasks(document.querySelectorAll('#w4-chk'));
         printTasks(document.querySelectorAll('.cust-task'));
 
         const totalHeight = currentY + 50;
